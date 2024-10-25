@@ -13,9 +13,17 @@ std::unordered_set<std::string> construct_word_bank(std::string filename) {
         return word_bank;
     }
 
-    // TODO: Construct word bank here
+    std::string common_word;
+    while (file >> common_word) {
+        word_bank.insert(common_word);
+    }
 
     return word_bank;
+}
+
+// Returns true if word_bank contains word
+bool contains_word(std::unordered_set<std::string>& word_bank, std::string word) {
+    return word_bank.find(word) != word_bank.end();
 }
 
 int main(int argc, char* argv[]) {
@@ -38,6 +46,12 @@ int main(int argc, char* argv[]) {
     std::unordered_set<std::string> word_bank = construct_word_bank(dict_filename);
 
     std::cout << "Word Bank Size: " << word_bank.size() << std::endl;
+
+    std::cout << contains_word(word_bank, "hello") << std::endl;
+    std::cout << contains_word(word_bank, "world") << std::endl;
+    std::cout << contains_word(word_bank, "notcontained") << std::endl;
+
+    // TODO: Iterate through message file and compute ASCII bits and ERL bits
 
     return EXIT_SUCCESS;
 }

@@ -2,6 +2,13 @@
 #include <fstream>
 #include <unordered_set>
 
+#define ASCII_bits_per_char 8
+
+#define ERL_bits_per_char 6
+#define ERL_bits_per_word 13
+
+#define FLAG_bit 1
+
 // Construct a mock word bank from a file
 // Mock word bank contains only keys
 std::unordered_set<std::string> construct_word_bank(std::string filename) {
@@ -45,13 +52,29 @@ int main(int argc, char* argv[]) {
     std::string dict_filename = "dict.txt";
     std::unordered_set<std::string> word_bank = construct_word_bank(dict_filename);
 
-    std::cout << "Word Bank Size: " << word_bank.size() << std::endl;
+    if (word_bank.empty()) {
+        std::cout << "The word bank is empty."<< std::endl;
+        return EXIT_FAILURE;
+    }
 
-    std::cout << contains_word(word_bank, "hello") << std::endl;
-    std::cout << contains_word(word_bank, "world") << std::endl;
-    std::cout << contains_word(word_bank, "notcontained") << std::endl;
+    // TODO: Consider small probability of typos? This would force a conversion to 6-bit ASCII
+    // This can be done by moving the below to its own function that takes in an error rate, then varying the error rate
 
     // TODO: Iterate through message file and compute ASCII bits and ERL bits
+    // TODO: Compare ERL with NULL separators and tagged words
+    
+    int ASCII_bits = 0;
+    int ERL_NULL_bits = 0;
+    int ERL_TAG_bits = 0;
+
+    std::string word;
+    while (file >> word) {
+        // ASCII
+
+        // ERL w/ NULL
+
+        // ERL w/ TAG
+    }
 
     return EXIT_SUCCESS;
 }

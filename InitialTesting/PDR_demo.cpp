@@ -3,6 +3,7 @@
 #include <random>
 
 #define BitNumber 14
+#define ASCIINumber 6
 
 int main(int argc, char* argv[])
 {
@@ -36,7 +37,7 @@ int main(int argc, char* argv[])
         for(int i=0;i<101;i++) 
         {
             Bits[i]+=BitNumber;
-            if(rand()%101<i) Bits[i]+=5*word.size()+5;
+            if(rand()%101<i) Bits[i]+=ASCIINumber*(word.size()+1);
         }
 
         BitsASCII   += 8*word.size()+8; // +8 accounts for the space that is not read in

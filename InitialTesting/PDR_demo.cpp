@@ -5,6 +5,8 @@
 #define BitNumber 14
 #define ASCIINumber 6
 
+// This is a test
+
 int main(int argc, char* argv[])
 {
     if(argc!=2) // requires text file input

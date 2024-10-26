@@ -88,6 +88,9 @@ int main(int argc, char* argv[]) {
     int num_misses = 0;
     double hit_rate = 0.0;
 
+    double avg_length_missed_word = 0.0;        ///////////////////////// New stat?
+    int miss_char_count = 0;
+
     std::string word;
     while (file >> word) {
         // Simulate File Preprocessor
@@ -134,11 +137,14 @@ int main(int argc, char* argv[]) {
             // Add a flag bit in front of each char
             ERL_TAG_bits += num_chars * (FLAG_bit + ERL_bits_per_char);
         }
+
+        if(!bank_hit) miss_char_count += num_chars; //////////////////////////////////////
     }
 
     // Compute stats
     avg_word_length = (double)total_num_chars / (double)total_num_words;
     hit_rate = (double)num_hits / (double)(num_hits + num_misses);
+    avg_length_missed_word = double(miss_char_count) / (double)num_misses;  ////////////////////////////
 
     // Output to console
     std::cout << "File: " << filename << std::endl;
@@ -155,6 +161,8 @@ int main(int argc, char* argv[]) {
     std::cout << "Total Word Bank Hits: " << num_hits << std::endl;
     std::cout << "Total Word Bank Misses: " << num_misses << std::endl;
     std::cout << "Word Bank Hit Rate: " << hit_rate << std::endl;
+
+    std::cout << "Average length of missed word: " << avg_length_missed_word << std::endl;
 
     return EXIT_SUCCESS;
 }

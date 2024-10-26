@@ -154,7 +154,7 @@ int main(int argc, char* argv[]) {
     std::cout << "Avg Word Length: " << avg_word_length << std::endl;
     std::cout << "Total Word Bank Hits: " << num_hits << std::endl;
     std::cout << "Total Word Bank Misses: " << num_misses << std::endl;
-    std::cout << "Word Bank Hit Rate: " << hit_rate << "%" << std::endl;
+    std::cout << "Word Bank Hit Rate: " << hit_rate << std::endl;
 
     return EXIT_SUCCESS;
 }

@@ -2,8 +2,9 @@
 #include <fstream>
 #include <random>
 
-#define BitNumber 14
+#define BitNumber 13
 #define ASCIINumber 6
+#define TagBit 1
 
 // This is a test
 
@@ -27,6 +28,7 @@ int main(int argc, char* argv[])
 
     std::string word;
     int Bits[101] = {};   // 0-100 inclusive
+    int BitsTag[101] = {};
     std::random_device rand;
 
     int BitsASCII = 0;
@@ -42,7 +44,9 @@ int main(int argc, char* argv[])
             Bits[i] += BitNumber;
             if(rand() % 101 < i) {
                 Bits[i] += ASCIINumber * (word.size()+1);
+                BitsTag[i] += TagBit + ASCIINumber * (word.size()+1);
             } 
+            else BitsTag[i] += BitNumber + TagBit;
         }
 
         BitsASCII += 8*word.size() + 8; // +8 accounts for the space that is not read in
@@ -57,8 +61,11 @@ int main(int argc, char* argv[])
     std::cout << std::endl << std::endl;
     std::cout << "Total number of bits used with the ASCII encoding scheme: " << BitsASCII << std::endl;
 
+    std::cout<<"Total number of bits in\t\t\t\tNull\t\tTag\n";
     for(int i = 0; i < 101; i++) {
-        std::cout << "Total number of bits in our encoding with a " << i << "% error rate:\t" << Bits[i] << std::endl;
+        std::cout << "Total number of bits  with a " << i << "% error rate:\t" << Bits[i] ;
+        if(Bits[i]>9999999) std::cout << "\t" << BitsTag[i] << std::endl;
+        else std::cout << "\t\t" << BitsTag[i] << std::endl;
     }
     std::cout << std::endl;
 
@@ -67,11 +74,13 @@ int main(int argc, char* argv[])
     std::cout << "Average length of word: " << averageWordLength << std::endl;
     std::cout << std::endl;
 
-    std::cout << "Compared to ASCII, bits saved \t# \tand \t%:" << std::endl;
+    std::cout << "Compared to ASCII, NULL saved \t# \tand \t%\tTag saved\t#\t\t%" << std::endl;
 
-    for(int i = 0; i < 101; i++) {
-        std::cout << "\t" << i << "% error rate:\t\t" << BitsASCII - Bits[i] << "\t\t" << 100-100*(double)Bits[i]/(double)BitsASCII << std::endl;
+    for(int i = 0; i < 100; i++) {
+        if(i<96) std::cout << "\t" << i << "% error rate:\t\t" << BitsASCII - Bits[i] << "\t\t" << 100-100*(double)Bits[i]/(double)BitsASCII << "\t\t\t" << BitsASCII - BitsTag[i] << "\t\t" << 100-100*(double)BitsTag[i]/(double)BitsASCII << std::endl;
+        else std::cout << "\t" << i << "% error rate:\t\t" << BitsASCII - Bits[i] << "\t\t" << 100-100*(double)Bits[i]/(double)BitsASCII << "\t\t" << BitsASCII - BitsTag[i] << "\t\t" << 100-100*(double)BitsTag[i]/(double)BitsASCII << std::endl;
     }
+        std::cout<<"\t100% error rate:\t" << BitsASCII - Bits[100] << "\t\t" << 100 - 100 * (double)Bits[100] / (double)BitsASCII << "\t\t" << BitsASCII - BitsTag[100] << "\t\t" << 100-100*(double)BitsTag[100]/(double)BitsASCII << std::endl;
     
     // std::cout<<"\t"<<i<<"% error rate:\t\t"<<BitsASCII - Bits[i]<<"\t\t"<<100-100*(double)Bits[i]/(double)BitsASCII<<"\n";
     //                        std::cout<<"\t100% error rate:\t"<<BitsASCII - Bits[100]<<"\t\t"<<100-100*(double)Bits[100]/(double)BitsASCII<<"\n";

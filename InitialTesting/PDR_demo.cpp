@@ -59,7 +59,7 @@ int main(int argc, char* argv[])
 
     // Output to console
     std::cout << std::endl << std::endl;
-    std::cout << "Total number of bits used with the ASCII encoding scheme: " << BitsASCII << std::endl;
+    std::cout << "Total number of bits - ASCII encoding scheme: \t" << BitsASCII << std::endl;
 
     std::cout<<"Total number of bits in\t\t\t\tNull\t\tTag\n";
     for(int i = 0; i < 101; i++) {
@@ -67,6 +67,7 @@ int main(int argc, char* argv[])
         if(Bits[i]>9999999) std::cout << "\t" << BitsTag[i] << std::endl;
         else std::cout << "\t\t" << BitsTag[i] << std::endl;
     }
+    std::cout << "Total number of bits - ASCII encoding scheme: \t" << BitsASCII << std::endl;
     std::cout << std::endl;
 
     std::cout << "Total number of words: " << totalWords << std::endl;

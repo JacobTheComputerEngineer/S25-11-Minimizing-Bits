@@ -144,11 +144,29 @@ int main() {
 
     std::string word;
     while (file >> word) {
+        // STATS
+        if (contains(word_bank, word)) {
+            num_bits += 14;
+        }
+        else {
+            num_misses++;
+        }
+
+        ascii_bits += 8 * (word.length() + 1);
+
+        
+
+
         // Simulate File Pre-Processor
         std::vector<std::string> words = simulate_file_preprocessor(word);
 
-        for (auto x : words) {
-            std::cout << x << std::endl;
+        for (std::string sequence : words) {
+            if (contains(word_bank, sequence)) {
+                oss << "0" << word_bank[sequence] << std::endl;
+            }
+            else {
+                // TODO
+            }
         }
 
         // for string in words

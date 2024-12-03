@@ -4,11 +4,8 @@
 #include <bitset>
 #include <cstdint>
 #include <sstream>
-#include <map>
-#include <vector>
 
-// typedef std::map<std::string, std::string> WordBank;
-typedef std::vector<std::pair<std::string, std::string>> WordBank;
+typedef std::unordered_map<std::string, std::string> WordBank;
 
 // Construct word bank from dictionary file
 // Key = common word
@@ -30,7 +27,7 @@ WordBank construct_word_bank(std::string filename) {
         oss << bitset;
         std::string binary_code = oss.str();
 
-        word_bank.push_back(std::make_pair(common_word, binary_code));
+        word_bank[common_word] = binary_code;
         code_point++;
     }
 

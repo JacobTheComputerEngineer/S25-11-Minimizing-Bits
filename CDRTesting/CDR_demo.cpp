@@ -138,8 +138,9 @@ int main() {
     }
 
     // STATS
-    int num_bits = 0;
+    int num_hits = 0;
     int num_misses = 0;
+    int erl_bits = 0;
     int ascii_bits = 0;
 
     std::string word;
@@ -153,14 +154,14 @@ int main() {
 
             if (contains(word_bank, sequence)) {
                 std::cout << "0" << word_bank[sequence] << std::endl;
-                oss << "0" << word_bank[sequence] << std::endl;
+                oss << "0" << word_bank[sequence];
             }
             else {
                 // TOOD: Check for digraphs
                 for (char c : sequence) {
                     std::string s(1, c);
                     std::cout << "1" << char_bank[s] << std::endl;
-                    oss << "1" << char_bank[s] << std::endl;
+                    oss << "1" << char_bank[s];
                 }
             }
         }
@@ -173,6 +174,7 @@ int main() {
 
 
     std::cout << std::endl << std::endl;
+    std::cout << "----------------------" << std::endl;
     std::cout << "Binary: " << std::endl;
     std::string erl = oss.str();
     std::cout << erl << std::endl;

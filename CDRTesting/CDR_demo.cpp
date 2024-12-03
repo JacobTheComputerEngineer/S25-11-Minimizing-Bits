@@ -153,7 +153,7 @@ int main() {
         for (std::string sequence : words) {
             std::cout << sequence << std::endl;
 
-            if (contains(word_bank, sequence)) {
+            if (contains(word_bank, sequence)) { // Hit
                 num_hits++;
 
                 std::cout << "0" << word_bank[sequence] << std::endl;
@@ -161,7 +161,7 @@ int main() {
 
                 erl_bits += 14;
             }
-            else {
+            else {  // Miss
                 num_misses++;
 
                 // TOOD: Check for digraphs

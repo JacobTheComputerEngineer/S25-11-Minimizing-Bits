@@ -52,7 +52,7 @@ CharBank construct_char_bank() {
     }
 
     // Add special characters to the vector
-    std::string special_chars = ".,?!-=+/::;()'\"~@#$%&*";
+    std::string special_chars = ".,?!-+=/:;()'\"~@#$%&*";
     for (char sc : special_chars) {
         char_list.push_back(std::string(1, sc));
     }

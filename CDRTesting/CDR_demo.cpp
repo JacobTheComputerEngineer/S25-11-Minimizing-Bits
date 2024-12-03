@@ -36,6 +36,8 @@ WordBank construct_word_bank(std::string filename) {
     return word_bank;
 }
 
+// Construct reduced ascii table
+// This is constant and does not change
 CharBank construct_char_bank() {
     CharBank char_bank;
 
@@ -79,23 +81,24 @@ CharBank construct_char_bank() {
     return char_bank;
 }
 
+bool contains(WordBank& bank, std::string key) {
+    return bank.find(key) != bank.end();
+}
 
 int main() {
 
     std::cout << "CDR Demo..." << std::endl;
 
-    std::string filename;
-
-    filename = "dict.txt";
+    std::string filename = "dict.txt";
     WordBank word_bank = construct_word_bank(filename);
 
     CharBank char_bank = construct_char_bank();
 
-    for (auto char_code_pair : char_bank) {
-        std::string char_str = char_code_pair.first;
-        std::string binary_code = char_code_pair.second;
+    std::ostringstream oss;
 
-        std::cout << char_str << " : " << binary_code << std::endl;
-    }
+    
 
+    std::string erl = oss.str();
+    std::cout << "Binary: " << std::endl;
+    std::cout << erl << std::endl;
 }

@@ -89,16 +89,54 @@ int main() {
 
     std::cout << "CDR Demo..." << std::endl;
 
-    std::string filename = "dict.txt";
+    std::string filename;
+
+    filename = "dict.txt";
     WordBank word_bank = construct_word_bank(filename);
 
     CharBank char_bank = construct_char_bank();
 
     std::ostringstream oss;
 
-    
+    filename = "message.txt";
+    std::ifstream file(filename);
+    if (!file.good()) {
+        throw std::invalid_argument("Could not read message file");
+    }
 
-    std::string erl = oss.str();
+    // STATS
+    int num_bits = 0;
+    int num_misses = 0;
+    int ascii_bits = 0;
+
+    std::string word;
+    while (file >> word) {
+        // Simulate File Pre-Processor -> return std::vector<string>
+
+        // for string in words
+        //  if contains(bank, string)
+        //    oss << "0" << word_bank[string]
+        //  else
+        //    for char in string
+        //     oss << "1" << char_bank[string]  // TODO: Digraphs?
+
+        // TEMP:
+        if (contains(word_bank, word)) {
+            oss << "0" << word_bank[word] << std::endl;
+            num_bits += 14;
+            ascii_bits += 8 * (word.length() + 1);
+        }
+        else {
+            num_misses++;
+        }
+    }
+
+    // Output to Console
+    std::cout << "ASCII Bits: " << ascii_bits << std::endl;
+    std::cout << "Num Bits: " << num_bits << std::endl;
+    std::cout << "Num Misses: " << num_misses << std::endl;
+
     std::cout << "Binary: " << std::endl;
+    std::string erl = oss.str();
     std::cout << erl << std::endl;
 }

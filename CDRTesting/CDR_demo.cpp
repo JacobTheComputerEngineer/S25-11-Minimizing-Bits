@@ -81,8 +81,41 @@ CharBank construct_char_bank() {
     return char_bank;
 }
 
+// Return if the word bank contains the given key
 bool contains(WordBank& bank, std::string key) {
     return bank.find(key) != bank.end();
+}
+
+// Set all characters to lowercase
+// Split punctuation
+std::vector<std::string> simulate_file_preprocessor(std::string word) {
+    std::vector<std::string> words;
+    std::string current_word;
+
+    // Iterate over each character in the word
+    for (size_t i = 0; i < word.length(); ++i) {
+        char c = word[i];
+
+        // If the character is a punctuation mark, split it
+        if (std::ispunct(c)) {
+            if (!current_word.empty()) {
+                words.push_back(current_word);
+                current_word.clear();
+            }
+            words.push_back(std::string(1, c)); // Add punctuation as a separate word
+        }
+        else {
+            // Convert character to lowercase and add to the current word
+            current_word += std::tolower(c);
+        }
+    }
+
+    // If there's a remaining word, add it
+    if (!current_word.empty()) {
+        words.push_back(current_word);
+    }
+
+    return words;
 }
 
 int main() {
@@ -111,7 +144,12 @@ int main() {
 
     std::string word;
     while (file >> word) {
-        // Simulate File Pre-Processor -> return std::vector<string>
+        // Simulate File Pre-Processor
+        std::vector<std::string> words = simulate_file_preprocessor(word);
+
+        for (auto x : words) {
+            std::cout << x << std::endl;
+        }
 
         // for string in words
         //  if contains(bank, string)
@@ -121,14 +159,14 @@ int main() {
         //     oss << "1" << char_bank[string]  // TODO: Digraphs?
 
         // TEMP:
-        if (contains(word_bank, word)) {
-            oss << "0" << word_bank[word] << std::endl;
-            num_bits += 14;
-            ascii_bits += 8 * (word.length() + 1);
-        }
-        else {
-            num_misses++;
-        }
+        // if (contains(word_bank, word)) {
+        //     oss << "0" << word_bank[word] << std::endl;
+        //     num_bits += 14;
+        //     ascii_bits += 8 * (word.length() + 1);
+        // }
+        // else {
+        //     num_misses++;
+        // }
     }
 
     // Output to Console

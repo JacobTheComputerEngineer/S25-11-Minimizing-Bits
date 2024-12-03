@@ -145,6 +145,7 @@ int main() {
 
     std::string word;
     while (file >> word) {
+        ascii_bits += 8 * (word.length() + 1);
 
         // Simulate File Pre-Processor
         std::vector<std::string> words = simulate_file_preprocessor(word);
@@ -153,28 +154,38 @@ int main() {
             std::cout << sequence << std::endl;
 
             if (contains(word_bank, sequence)) {
+                num_hits++;
+
                 std::cout << "0" << word_bank[sequence] << std::endl;
                 oss << "0" << word_bank[sequence];
+
+                erl_bits += 14;
             }
             else {
+                num_misses++;
+
                 // TOOD: Check for digraphs
                 for (char c : sequence) {
                     std::string s(1, c);
                     std::cout << "1" << char_bank[s] << std::endl;
                     oss << "1" << char_bank[s];
+
+                    erl_bits += 7;
                 }
             }
         }
     }
 
+    double hit_rate = (double)(num_hits) / (double)(num_hits + num_misses);
+
     // Output to Console
-    // std::cout << "ASCII Bits: " << ascii_bits << std::endl;
-    // std::cout << "Num Bits: " << num_bits << std::endl;
-    // std::cout << "Num Misses: " << num_misses << std::endl;
-
-
     std::cout << std::endl << std::endl;
     std::cout << "----------------------" << std::endl;
+    std::cout << "ASCII Bits: " << ascii_bits << std::endl;
+    std::cout << "ERL Bits: " << erl_bits << std::endl;
+    std::cout << "Num Hits: " << num_hits << std::endl;
+    std::cout << "Num Misses: " << num_misses << std::endl;
+    std::cout << "Hit Rate: " << hit_rate << std::endl;
     std::cout << "Binary: " << std::endl;
     std::string erl = oss.str();
     std::cout << erl << std::endl;

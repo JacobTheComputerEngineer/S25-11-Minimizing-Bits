@@ -144,54 +144,35 @@ int main() {
 
     std::string word;
     while (file >> word) {
-        // STATS
-        if (contains(word_bank, word)) {
-            num_bits += 14;
-        }
-        else {
-            num_misses++;
-        }
-
-        ascii_bits += 8 * (word.length() + 1);
-
-        
-
 
         // Simulate File Pre-Processor
         std::vector<std::string> words = simulate_file_preprocessor(word);
 
         for (std::string sequence : words) {
+            std::cout << sequence << std::endl;
+
             if (contains(word_bank, sequence)) {
+                std::cout << "0" << word_bank[sequence] << std::endl;
                 oss << "0" << word_bank[sequence] << std::endl;
             }
             else {
-                // TODO
+                // TOOD: Check for digraphs
+                for (char c : sequence) {
+                    std::string s(1, c);
+                    std::cout << "1" << char_bank[s] << std::endl;
+                    oss << "1" << char_bank[s] << std::endl;
+                }
             }
         }
-
-        // for string in words
-        //  if contains(bank, string)
-        //    oss << "0" << word_bank[string]
-        //  else
-        //    for char in string
-        //     oss << "1" << char_bank[string]  // TODO: Digraphs?
-
-        // TEMP:
-        // if (contains(word_bank, word)) {
-        //     oss << "0" << word_bank[word] << std::endl;
-        //     num_bits += 14;
-        //     ascii_bits += 8 * (word.length() + 1);
-        // }
-        // else {
-        //     num_misses++;
-        // }
     }
 
     // Output to Console
-    std::cout << "ASCII Bits: " << ascii_bits << std::endl;
-    std::cout << "Num Bits: " << num_bits << std::endl;
-    std::cout << "Num Misses: " << num_misses << std::endl;
+    // std::cout << "ASCII Bits: " << ascii_bits << std::endl;
+    // std::cout << "Num Bits: " << num_bits << std::endl;
+    // std::cout << "Num Misses: " << num_misses << std::endl;
 
+
+    std::cout << std::endl << std::endl;
     std::cout << "Binary: " << std::endl;
     std::string erl = oss.str();
     std::cout << erl << std::endl;

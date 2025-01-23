@@ -1,4 +1,4 @@
-class wordBank
+class wordBank_
 {
 
 };

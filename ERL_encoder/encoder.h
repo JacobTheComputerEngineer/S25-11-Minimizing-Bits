@@ -1,4 +1,4 @@
-class encoder
+class encoder_
 {
 
 };

@@ -21,5 +21,7 @@ class ERL
 
 int main(int argc, char *argv[])
 {
-
+    ERL erl;
+    erl.pre.preprocessorTestbench("testFile.txt");
+    return 0;
 }

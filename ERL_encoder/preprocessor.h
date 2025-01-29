@@ -6,8 +6,9 @@
 // apt install libicu-dev
 // apt install pkg-config
 // g++ -o test_icu main.cpp preprocessor.cpp $(pkg-config --cflags --libs icu-uc icu-i18n)
+
 #include <unicode/unistr.h>
-#include <unicode/normlzr.h>
+// #include <unicode/normlzr.h> // used in decomposer, not needed without it
 #include <unicode/translit.h>
 
 class preprocessor_
@@ -19,9 +20,10 @@ class preprocessor_
     private:
         std::ifstream iFile;
         std::string modifier(std::string word);
-            bool checkExists(char letter);
-            char decomposer(std::string UTF_8_Bytes);
-            char transliterateToASCII(std::string input); // Does not exist from apt install libicu-dev
+            // char decomposer(std::string UTF_8_Bytes); // outdated byt transliterateToASCII
+            char transliterateToASCII(std::string input); 
         std::string lowercase(std::string word);
         std::vector<std::string> separate(std::string word);
+            bool isPunc(char letter);
+        bool checkExists(char letter);
 };

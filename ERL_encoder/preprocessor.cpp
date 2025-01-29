@@ -15,8 +15,8 @@ void preprocessor_::preprocessorTestbench(std::string inputFile)
         words = convertWord(word);
         for(int i=0;i<words.size();i++)
         {   
-            std::cout<<words.at(i);
-            std::cout<<"\t"<<word;
+            std::cout << words.at(i) << " ";
+            // std::cout<<"\t"<<word;
         }
         std::cout<<std::endl;
     }
@@ -77,35 +77,30 @@ std::string preprocessor_::modifier(std::string word)
     return word;
 }
 
-bool preprocessor_::checkExists(char letter)
-{
-    return false;
-}
-
-char preprocessor_::decomposer(std::string UTF_8_Bytes)
-{
-    std::cout<<UTF_8_Bytes<<"\n";
-    icu::UnicodeString utf8String = icu::UnicodeString::fromUTF8(UTF_8_Bytes);
-
-    UErrorCode status = U_ZERO_ERROR;
-    icu::UnicodeString decomposedString;
-    icu::Normalizer::decompose(utf8String, FALSE, 0, decomposedString, status);
-
-    if (U_SUCCESS(status)) {
-        std::string result;
-        decomposedString.toUTF8String(result);
-        std::cout << "Decomposed string: " ;
-        for(int i=0;i<result.size();i++)
-        {
-            std::cout << std::hex<< (0xFF & static_cast<int>(result[i])) << ' ';
-        }
-        std::cout<<"\n";
-        return result[0];
-    } else
-        std::cerr << "Error during decomposition: " << u_errorName(status) << std::endl;
-
-    return 0x00;
-}
+// char preprocessor_::decomposer(std::string UTF_8_Bytes)
+// {
+//     std::cout<<UTF_8_Bytes<<"\n";
+//     icu::UnicodeString utf8String = icu::UnicodeString::fromUTF8(UTF_8_Bytes);
+//
+//     UErrorCode status = U_ZERO_ERROR;
+//     icu::UnicodeString decomposedString;
+//     icu::Normalizer::decompose(utf8String, FALSE, 0, decomposedString, status);
+//
+//     if (U_SUCCESS(status)) {
+//         std::string result;
+//         decomposedString.toUTF8String(result);
+//         std::cout << "Decomposed string: " ;
+//         for(int i=0;i<result.size();i++)
+//         {
+//             std::cout << std::hex<< (0xFF & static_cast<int>(result[i])) << ' ';
+//         }
+//         std::cout<<"\n";
+//         return result[0];
+//     } else
+//         std::cerr << "Error during decomposition: " << u_errorName(status) << std::endl;
+//
+//     return 0x00;
+// }
 
 char preprocessor_::transliterateToASCII(std::string input) {
     icu::UnicodeString str = icu::UnicodeString::fromUTF8(input);
@@ -137,6 +132,35 @@ std::string preprocessor_::lowercase(std::string word)
 std::vector<std::string> preprocessor_::separate(std::string word)
 {
     std::vector<std::string> words;
-    words.push_back(word);
+    int numWord = 0;
+    words.push_back("");
+
+    for(int i=0;i<word.size();i++)
+    {
+        if(!isPunc(word[i]))
+        {
+            words[numWord] += word[i];
+        }
+        else
+        {
+            words.push_back("");
+            numWord++;
+            words[numWord] += word[i];
+            words.push_back("");
+            numWord++;
+        }
+
+    }
+
     return words;
+}
+
+bool preprocessor_::isPunc(char letter)
+{
+    return (letter == ':' || letter == ';' || letter == ',' || letter == '.' || letter == '?' || letter == '!' || letter == '\"' || letter == '\'' );
+}
+
+bool preprocessor_::checkExists(char letter)
+{
+    return false;
 }

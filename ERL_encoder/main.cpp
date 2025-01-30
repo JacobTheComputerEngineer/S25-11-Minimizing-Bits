@@ -52,6 +52,9 @@ class ERL
         //      a loop that receives a word from pre and gives it to enc
         //  bool checkCommon (enc, wb)
         //      enc gives a word to wb, wb returns if common
+        //  void checkCharExists (pre, wb)
+        //      goes through the output vector of the preprocessor
+        //      removes all characters that do not exist in the word bank char list
 
     private:
 
@@ -59,10 +62,10 @@ class ERL
 
 int main(int argc, char *argv[])
 {
-    // ERL erl;
+    ERL erl;
 
     // Testing the preprocessor
-    // erl.pre.preprocessorTestbench("preprocessorTestFile.txt");
+    erl.pre.preprocessorTestbench("preprocessorTestFile.txt");
 
 
     return 0;

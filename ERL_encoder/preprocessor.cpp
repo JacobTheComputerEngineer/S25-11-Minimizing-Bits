@@ -129,7 +129,7 @@ std::string preprocessor_::lowercase(std::string word)
     return word;
 }
 
-std::vector<std::string> preprocessor_::separate(std::string word)
+std::vector<std::string> preprocessor_::separate(std::string word)      // TALK ABOUT NOT INCLUDING ' 
 {
     std::vector<std::string> words;
     int numWord = 0;
@@ -157,10 +157,9 @@ std::vector<std::string> preprocessor_::separate(std::string word)
 
 bool preprocessor_::isPunc(char letter)
 {
-    return (letter == ':' || letter == ';' || letter == ',' || letter == '.' || letter == '?' || letter == '!' || letter == '\"' || letter == '\'' );
-}
-
-bool preprocessor_::checkExists(char letter)
-{
-    return false;
+    return (letter == '.' || letter == ',' || letter == '?' || letter == '!' || 
+    letter == '-' || letter == '+' || letter == '=' || letter == '/' || 
+    letter == ':' || letter == ';' || letter == '(' || letter == ')' || 
+    letter == '\'' || letter == '\"' || letter == '~' || letter == '@' || 
+    letter == '#' || letter == '$' || letter == '%' || letter == '&' || letter == '*');
 }

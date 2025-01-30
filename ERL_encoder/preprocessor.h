@@ -25,5 +25,4 @@ class preprocessor_
         std::string lowercase(std::string word);
         std::vector<std::string> separate(std::string word);
             bool isPunc(char letter);
-        bool checkExists(char letter);
 };

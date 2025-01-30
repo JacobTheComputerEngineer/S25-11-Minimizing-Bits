@@ -48,13 +48,12 @@ class ERL
         // suggested functions and connections
         //  void loadFiles (parser, wb, pre)
         //      input file from the given from the parser updates the file value of wb and pre
+        //  void loadCharsets (wb, pre)
+        //      upload the character bank (full and punctuation) to the preprocessor
         //  void encode  (pre, enc)
         //      a loop that receives a word from pre and gives it to enc
         //  bool checkCommon (enc, wb)
         //      enc gives a word to wb, wb returns if common
-        //  void checkCharExists (pre, wb)
-        //      goes through the output vector of the preprocessor
-        //      removes all characters that do not exist in the word bank char list
 
     private:
 

@@ -2,7 +2,7 @@
 
 void preprocessor_::preprocessorTestbench(std::string inputFile)
 {
-    if ( !setUp(inputFile) )
+    if ( !setUp(inputFile, "abcdefghijklmnopqurstuvwxyz,./;:\'\"1234567890", ",./;:\'\"") )
         {
             std::cout<<"Not found\n";
             return;
@@ -13,24 +13,26 @@ void preprocessor_::preprocessorTestbench(std::string inputFile)
     while(iFile>>word)
     {
         words = convertWord(word);
+        std::cout<<word<<"\t\t";
         for(int i=0;i<words.size();i++)
         {   
             std::cout << words.at(i) << " ";
-            // std::cout<<"\t"<<word;
         }
         std::cout<<std::endl;
     }
 }
 
-bool preprocessor_::setUp(std::string inputFile)
+bool preprocessor_::setUp(std::string inputFile, std::string eChars, std::string puncChars)
 {
     iFile.open(inputFile);
+    existingChars = eChars;
+    puncuationChars = puncChars;
     return iFile.good();
 }
 
 std::vector<std::string> preprocessor_::convertWord(std::string word)
 {
-    return separate(lowercase(modifier(word)));
+    return removeNonexisting(separate(lowercase(modifier(word))));
 }
 
 std::string preprocessor_::modifier(std::string word)
@@ -157,9 +159,27 @@ std::vector<std::string> preprocessor_::separate(std::string word)      // TALK 
 
 bool preprocessor_::isPunc(char letter)
 {
-    return (letter == '.' || letter == ',' || letter == '?' || letter == '!' || 
-    letter == '-' || letter == '+' || letter == '=' || letter == '/' || 
-    letter == ':' || letter == ';' || letter == '(' || letter == ')' || 
-    letter == '\'' || letter == '\"' || letter == '~' || letter == '@' || 
-    letter == '#' || letter == '$' || letter == '%' || letter == '&' || letter == '*');
+    // return (letter == '.' || letter == ',' || letter == '?' || letter == '!' || 
+    // letter == '-' || letter == '+' || letter == '=' || letter == '/' || 
+    // letter == ':' || letter == ';' || letter == '(' || letter == ')' || 
+    // letter == '\'' || letter == '\"' || letter == '~' || letter == '@' || 
+    // letter == '#' || letter == '$' || letter == '%' || letter == '&' || letter == '*');
+    return (puncuationChars.find(letter) != std::string::npos);
+}
+
+std::vector<std::string> preprocessor_::removeNonexisting(std::vector<std::string> inWords)
+{
+    std::vector<std::string> outWords;
+    for(int i=0;i<inWords.size();i++)
+    {
+        outWords.push_back("");
+        for(int j=0;j<inWords[i].size();j++)
+        {
+            if(existingChars.find(inWords[i][j]) != std::string::npos)
+            {
+                outWords[i] += inWords[i][j];
+            }
+        }
+    }
+    return outWords;
 }

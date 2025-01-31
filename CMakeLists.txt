@@ -9,16 +9,19 @@ find_package(ICU REQUIRED COMPONENTS uc i18n)
 
 # Source files
 set(LIB_SOURCE
-    preprocessor.h
-    preprocessor.cpp
+    wordBank.h wordBank.cpp
+    preprocessor.h preprocessor.cpp
+    parser.h parser.cpp
+    encoder.h encoder.cpp
+    decoder.h decoder.cpp
 )
 
 # Compile test_icu binary
-add_executable(test_icu main.cpp ${LIB_SOURCE})
+add_executable(erl main.cpp ${LIB_SOURCE})
 
 # Link ICU libraries
-target_include_directories(test_icu PRIVATE ${ICU_INCLUDE_DIRS})
-target_link_libraries(test_icu PRIVATE ${ICU_LIBRARIES})
+target_include_directories(erl PRIVATE ${ICU_INCLUDE_DIRS})
+target_link_libraries(erl PRIVATE ${ICU_LIBRARIES})
 
 
 # TODO: Make this more robust

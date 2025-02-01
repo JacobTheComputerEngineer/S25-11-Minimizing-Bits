@@ -34,6 +34,7 @@ endif()
 # Require a C++11 compiler for all targets
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Optional strict mode in reference environment
 if(UNIX AND CMAKE_COMPILER_IS_GNUCXX AND STRICT)

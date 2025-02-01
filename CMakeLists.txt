@@ -45,7 +45,16 @@ endif()
 if(UNIX AND NOT APPLE AND CMAKE_COMPILER_IS_GNUCXX AND MEMORY)
   message("-- Enabling valgrind memory check")
   add_custom_target(memory
-    COMMAND valgrind ${CMAKE_BINARY_DIR}/unittests)
+    COMMAND valgrind ${CMAKE_BINARY_DIR}/unittests
+  )
+endif()
+
+# Run clang-tidy on all .cpp files
+if(UNIX AND NOT APPLE AND CMAKE_COMPILER_IS_GNUCXX AND TIDY)
+  message("-- Enabling clang-tidy check")
+  add_custom_target(tidy
+    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/scripts/tidy.sh
+  )
 endif()
 
 
@@ -59,7 +68,6 @@ add_executable(unittests catch.hpp ${TEST_SOURCE})
 find_package(ICU REQUIRED COMPONENTS uc i18n)
 target_include_directories(erl PRIVATE ${ICU_INCLUDE_DIRS})
 target_link_libraries(erl PRIVATE ${ICU_LIBRARIES})
-
 
 
 # TODO: Make this more robust

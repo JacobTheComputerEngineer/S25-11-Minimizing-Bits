@@ -2,10 +2,6 @@
 # Adapted from ECE 3574
 # Version: 1
 # Date: Jan 30 2025
-# Build the image from dockerfile:
-# docker build . -t s25-11
-# Instantiate a container:
-# docker run --rm -it --mount type=bind,src=$PWD,dst=/mnt s25-11
 
 FROM ubuntu:20.04
 

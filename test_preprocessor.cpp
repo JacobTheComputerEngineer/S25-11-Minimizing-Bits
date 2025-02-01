@@ -2,12 +2,10 @@
 
 #include "preprocessor.h"
 
-TEST_CASE("test catch", "[preprocessor]") {
-    REQUIRE(1 == 1);
-    REQUIRE_FALSE(1 == 2);
+TEST_CASE("example test", "[preprocessor]") {
+    preprocessor_ pre;
+
+    REQUIRE(true);
 }
 
-TEST_CASE("test catch 2", "[preprocessor]") {
-    std::cout << "This should fail" << std::endl;
-    REQUIRE(false);
-}
+// TODO: Add more tests

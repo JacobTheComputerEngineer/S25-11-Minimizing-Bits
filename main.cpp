@@ -2,7 +2,7 @@
 #include "encoder.h"
 #include "parser.h"
 #include "preprocessor.h" // contains linux only header files
-#include "wordBank.h"
+#include "wordbank.h"
 
 // need to do the following to get the headers
 // apt install libicu-dev
@@ -36,7 +36,7 @@ class ERL
 
 
         
-        wordBank_ wb;
+        wordbank_ wb;
         // TO DO : 
 
 

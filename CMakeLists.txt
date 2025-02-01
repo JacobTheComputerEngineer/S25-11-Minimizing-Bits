@@ -6,7 +6,7 @@ project(ECE4806-S25-11 CXX)
 
 # Source files
 set(LIB_SOURCE
-    wordBank.h wordBank.cpp
+    wordbank.h wordbank.cpp
     preprocessor.h preprocessor.cpp
     parser.h parser.cpp
     encoder.h encoder.cpp

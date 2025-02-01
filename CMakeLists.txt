@@ -62,7 +62,8 @@ endif()
 if(UNIX AND NOT APPLE AND CMAKE_COMPILER_IS_GNUCXX AND TIDY)
   message("-- Enabling clang-tidy check")
   add_custom_target(tidy
-    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/scripts/tidy.sh
+    COMMAND ${CMAKE_COMMAND} -E env "ROOT=${CMAKE_CURRENT_SOURCE_DIR}"
+    ${CMAKE_CURRENT_SOURCE_DIR}/scripts/tidy.sh
   )
 endif()
 

@@ -41,6 +41,7 @@ if(UNIX AND CMAKE_COMPILER_IS_GNUCXX AND FULL)
   set(STRICT TRUE CACHE BOOL "Enable strict build mode")
   set(MEMORY TRUE CACHE BOOL "Enable memory checks")
   set(TIDY TRUE CACHE BOOL "Enable clang-tidy checks")
+  set(COVERAGE TRUE CACHE BOOL "Enable code coverage checks")
 endif()
 
 # Optional strict mode in reference environment
@@ -77,5 +78,13 @@ find_package(ICU REQUIRED COMPONENTS uc i18n)
 target_include_directories(erl PRIVATE ${ICU_INCLUDE_DIRS})
 target_link_libraries(erl PRIVATE ${ICU_LIBRARIES})
 
-
-# TODO: Make this more robust
+# Enable code coverage generation
+if(UNIX AND NOT APPLE AND CMAKE_COMPILER_IS_GNUCXX AND COVERAGE)
+  message("-- Enabling code coverage")
+  set(GCC_COVERAGE_COMPILE_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
+  set_target_properties(unittests PROPERTIES COMPILE_FLAGS ${GCC_COVERAGE_COMPILE_FLAGS} )
+  target_link_libraries(unittests gcov)
+  add_custom_target(coverage
+    COMMAND ${CMAKE_COMMAND} -E env "ROOT=${CMAKE_CURRENT_SOURCE_DIR}"
+    ${CMAKE_CURRENT_SOURCE_DIR}/scripts/coverage.sh)
+endif()

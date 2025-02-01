@@ -41,6 +41,13 @@ if(UNIX AND CMAKE_COMPILER_IS_GNUCXX AND STRICT)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror")
 endif()
 
+# In the reference environment enable memory checking on tests
+if(UNIX AND NOT APPLE AND CMAKE_COMPILER_IS_GNUCXX AND MEMORY)
+  message("-- Enabling valgrind memory check")
+  add_custom_target(memory
+    COMMAND valgrind ${CMAKE_BINARY_DIR}/unittests)
+endif()
+
 
 # Compile erl binary
 add_executable(erl main.cpp ${LIB_SOURCE})
@@ -52,6 +59,7 @@ add_executable(unittests catch.hpp ${TEST_SOURCE})
 find_package(ICU REQUIRED COMPONENTS uc i18n)
 target_include_directories(erl PRIVATE ${ICU_INCLUDE_DIRS})
 target_link_libraries(erl PRIVATE ${ICU_LIBRARIES})
+
 
 
 # TODO: Make this more robust

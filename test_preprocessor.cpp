@@ -5,6 +5,8 @@
 TEST_CASE("example preprocessor test", "[preprocessor]") {
     preprocessor_ pre;
 
+    pre.preprocessorTestbench("preprocessorTestFile.txt");
+
     REQUIRE(true);
 }
 

@@ -3,7 +3,7 @@
 echo "Running Coverage assuming source root = " ${ROOT}
 
 lcov -c -i -b ${ROOT} -d . --no-external -o Coverage.baseline
-./unit_tests
+./unittests
 lcov -c -b ${ROOT} -d . --no-external  -o Coverage.out
 lcov -a Coverage.baseline -a Coverage.out -o Coverage.combined
 echo "-----------------------------------------------------------------"

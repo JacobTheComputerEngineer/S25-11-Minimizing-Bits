@@ -16,7 +16,11 @@ set(LIB_SOURCE
 # Test files
 set(TEST_SOURCE
   unittests.cpp
+  test_wordbank.cpp
   test_preprocessor.cpp
+  test_parser.cpp
+  test_encoder.cpp
+  test_decoder.cpp
 )
 
 # You should not need to edit anything below here

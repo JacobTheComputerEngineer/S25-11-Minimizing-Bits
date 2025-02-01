@@ -36,6 +36,13 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+if(UNIX AND CMAKE_COMPILER_IS_GNUCXX AND FULL)
+  message("-- Enabling full build mode")
+  set(STRICT TRUE CACHE BOOL "Enable strict build mode")
+  set(MEMORY TRUE CACHE BOOL "Enable memory checks")
+  set(TIDY TRUE CACHE BOOL "Enable clang-tidy checks")
+endif()
+
 # Optional strict mode in reference environment
 if(UNIX AND CMAKE_COMPILER_IS_GNUCXX AND STRICT)
   message("-- Enabling strict compilation mode")

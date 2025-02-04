@@ -1,26 +1,26 @@
 #include "preprocessor.h"
 
-void preprocessor_::preprocessorTestbench(std::string inputFile)
-{
-    if ( !setUp(inputFile, "abcdefghijklmnopqurstuvwxyz,./;:\'\"1234567890!?-", "-!?,./;:\'\"") )
-        {
-            std::cout<<"Not found\n";
-            return;
-        }
+// void preprocessor_::preprocessorTestbench(std::string inputFile)
+// {
+//     if ( !setUp(inputFile, "abcdefghijklmnopqurstuvwxyz,./;:\'\"1234567890!?-", "-!?,./;:\'\"") )
+//         {
+//             std::cout<<"Not found\n";
+//             return;
+//         }
 
-    std::vector<std::string> words;
-    std::string word;
-    while(iFile>>word)
-    {
-        words = convertWord(word);
-        std::cout<<word<<"\t\t";
-        for(int i=0;i<words.size();i++)
-        {   
-            std::cout << words.at(i) << " ";
-        }
-        std::cout<<std::endl;
-    }
-}
+//     std::vector<std::string> words;
+//     std::string word;
+//     while(iFile>>word)
+//     {
+//         words = convertWord(word);
+//         std::cout<<word<<"\t\t";
+//         for(int i=0;i<words.size();i++)
+//         {   
+//             std::cout << words.at(i) << " ";
+//         }
+//         std::cout<<std::endl;
+//     }
+// }
 
 bool preprocessor_::setUp(std::string inputFile, std::string eChars, std::string puncChars)
 {
@@ -28,6 +28,36 @@ bool preprocessor_::setUp(std::string inputFile, std::string eChars, std::string
     existingChars = eChars;
     puncuationChars = puncChars;
     return iFile.good();
+}
+
+bool preprocessor_::setFile(std::string file)
+{
+    iFile.open(file);
+    return iFile.good();
+}
+
+void preprocessor_::setExistingChars(std::string eChars)
+{
+    existingChars = eChars;
+    return;
+}
+
+void preprocessor_::setPuncChars(std::string puncChars)
+{
+    puncuationChars = puncChars;
+    return;
+}
+
+bool preprocessor_::fileStillGood()
+{
+    return iFile.good();
+}
+
+std::string preprocessor_::readWord()
+{
+    std::string word;
+    iFile>>word;
+    return word;
 }
 
 std::vector<std::string> preprocessor_::convertWord(std::string word)
@@ -42,10 +72,10 @@ std::string preprocessor_::modifier(std::string word)
         // debugging statement, will keep just in case
         // std::cout << std::hex << (0xFF & static_cast<int>(word[iter])) << ' ';
 
-        unsigned char byte1 = word[iter];
-        unsigned char byte2 = word[iter+1];
-        unsigned char byte3 = word[iter+2];
-        unsigned char byte4 = word[iter+3];
+        unsigned char byte1 = (iter<word.size())?   word[iter] : 0;
+        unsigned char byte2 = (iter+1<word.size())?   word[iter+1] : 0;
+        unsigned char byte3 = (iter+2<word.size())?   word[iter+2] : 0;
+        unsigned char byte4 = (iter+3<word.size())?   word[iter+3] : 0;
 
         /* 4-byte */
         if (byte1 >= 0xF0 && byte1 <= 0xF4) {
@@ -148,7 +178,7 @@ std::vector<std::string> preprocessor_::separate(std::string word)      // TALK 
             words.push_back("");
             numWord++;
             words[numWord] += word[i];
-            words.push_back("");
+            if(i!=(word.size()-1)) words.push_back("");
             numWord++;
         }
 

@@ -14,18 +14,29 @@
 class preprocessor_
 {
     public:
-        void preprocessorTestbench(std::string inputFile);
+        // void preprocessorTestbench(std::string inputFile);
         bool setUp(std::string inputFile, std::string existingChars, std::string puncChars);
+        bool setFile(std::string file);
+        void setExistingChars(std::string existingChars);
+        void setPuncChars(std::string puncChars);
+        bool fileStillGood();
+        std::string readWord();
         std::vector<std::string> convertWord(std::string word);
-    private:
-        std::ifstream iFile;
-        std::string existingChars;
-        std::string puncuationChars;
+
         std::string modifier(std::string word);
-            // char decomposer(std::string UTF_8_Bytes); // outdated byt transliterateToASCII
             char transliterateToASCII(std::string input); 
         std::string lowercase(std::string word);
         std::vector<std::string> separate(std::string word);
             bool isPunc(char letter);
         std::vector<std::string> removeNonexisting(std::vector<std::string> outWord);
+    private:
+        std::ifstream iFile;
+        std::string existingChars;
+        std::string puncuationChars;
+        // std::string modifier(std::string word);
+        //     char transliterateToASCII(std::string input); 
+        // std::string lowercase(std::string word);
+        // std::vector<std::string> separate(std::string word);
+        //     bool isPunc(char letter);
+        // std::vector<std::string> removeNonexisting(std::vector<std::string> outWord);
 };

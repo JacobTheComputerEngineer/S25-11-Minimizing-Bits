@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
     std::cout << "Running ERL correctly..." << std::endl;
 
     // Testing the preprocessor
-    erl.pre.preprocessorTestbench("preprocessorTestFile.txt");
+    // erl.pre.preprocessorTestbench("preprocessorTestFile.txt");
 
 
     return 0;

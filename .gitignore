@@ -4,3 +4,5 @@ build
 out
 winbuild
 refbuild
+docker
+.vs/

@@ -4,3 +4,6 @@ build
 out
 winbuild
 refbuild
+docker
+.vs/
+.idea/

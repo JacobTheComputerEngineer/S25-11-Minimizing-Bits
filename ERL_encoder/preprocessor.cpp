@@ -2,7 +2,7 @@
 
 void preprocessor_::preprocessorTestbench(std::string inputFile)
 {
-    if ( !setUp(inputFile, "abcdefghijklmnopqurstuvwxyz,./;:\'\"1234567890", ",./;:\'\"") )
+    if ( !setUp(inputFile, "abcdefghijklmnopqurstuvwxyz,./;:\'\"1234567890!?-", "-!?,./;:\'\"") )
         {
             std::cout<<"Not found\n";
             return;

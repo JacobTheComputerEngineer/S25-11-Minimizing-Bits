@@ -5,3 +5,5 @@ A lo lejos, un hombre llamado José escribía en su cuaderno: “À chaque insta
 Niños jugaban cerca de una tienda de jalapeños y crème brûlée, donde un letrero en polaco anunciaba: “Zapraszamy na świeże jagody i żurek!” En la esquina, Jürgen leía un poema titulado “Æsir y su gloria.” Fue un día lleno de diversidad lingüística, un verdadero tributo a la belleza de las palabras en todas sus formas.
 
 .This ?is !a ,blindSpot ;test
+
+!bl,ind,spot.test?

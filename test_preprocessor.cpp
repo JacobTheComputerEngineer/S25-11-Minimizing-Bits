@@ -2,6 +2,9 @@
 
 #include "preprocessor.h"
 
+/// TODO: Test convertWord()
+/// TODO: Test $ and @ don't get converted to S and a
+
 TEST_CASE("example preprocessor test", "[preprocessor]") {
     preprocessor_ pre;
 

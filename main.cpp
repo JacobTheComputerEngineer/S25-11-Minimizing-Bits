@@ -68,7 +68,11 @@ int main(int argc, char *argv[])
     erl.wb.construct("tempdictionary.txt");
 
     for (std::size_t i = 0; i < 100; ++i) {
-        std::cout << i << ": " << erl.wb.code_to_word(bit_code_13_(i)) << std::endl;
+        std::cout << bit_code_13_(i) << ": " << erl.wb.code_to_word(bit_code_13_(i)) << std::endl;
+    }
+
+    for (std::size_t i = 0; i < 64; ++i) {
+        std::cout << bit_code_6_(i) << ": " << erl.wb.code_to_char(bit_code_6_(i)) << std::endl;
     }
 
     return 0;

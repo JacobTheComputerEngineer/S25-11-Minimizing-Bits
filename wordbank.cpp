@@ -25,14 +25,14 @@ bool wordbank_::contains_word(const std::string& word) const {
     return forward_word_map.find(word) != forward_word_map.end();
 }
 
+// TODO: Adjust these as needed
 std::string wordbank_::getExistingChars() {
-    // TODO
-    return std::string();
+    return "abcdefghijklmnopqrstuvwxyz0123456789.,?!-+=/:;()\'\"~@#$%&*";
 }
 
+// TODO: Adjust these as needed
 std::string wordbank_::getPunctuationChars() {
-    // TODO
-    return std::string();
+    return ".,?!-+=/:;()\'\"~@#$%&*";
 }
 
 void wordbank_::build_word_map(const std::string& filename) {
@@ -69,5 +69,6 @@ void wordbank_::build_char_map() {
         reverse_char_map[bit_code_6_(i)] = char_list[i];
     }
 
+    // TODO: Assert size == 64
     // std::cout << "Final char wb size = " << forward_char_map.size() << std::endl;
 }

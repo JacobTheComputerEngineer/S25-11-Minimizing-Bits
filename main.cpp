@@ -65,5 +65,11 @@ int main(int argc, char *argv[])
 
     std::cout << "Running ERL correctly..." << std::endl;
 
+    erl.wb.construct("tempdictionary.txt");
+
+    for (std::size_t i = 0; i < 100; ++i) {
+        std::cout << i << ": " << erl.wb.code_to_word(bit_code_13_(i)) << std::endl;
+    }
+
     return 0;
 }

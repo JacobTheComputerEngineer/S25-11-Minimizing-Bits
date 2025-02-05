@@ -13,11 +13,8 @@ class wordbank_
 {
     public:
 
-        // Default constructor
-        wordbank_();
-
         // Construct the word bank from a given dictionary file
-        wordbank_(const std::string& filename);
+        void construct(const std::string& filename);
 
         // Access word bank
         bit_code_13_ word_to_code(const std::string& word) const;

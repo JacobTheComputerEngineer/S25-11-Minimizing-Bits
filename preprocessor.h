@@ -16,8 +16,7 @@ class preprocessor_
     public:
         // void preprocessorTestbench(std::string inputFile);
 
-        ///// TODO: Consolidate these to constructor?
-        // preprocessor_();
+        ///// TODO: Consolidate these to one construct function?
         bool setUp(std::string inputFile, std::string existingChars, std::string puncChars);
         bool setFile(std::string file);
         void setExistingChars(std::string existingChars);

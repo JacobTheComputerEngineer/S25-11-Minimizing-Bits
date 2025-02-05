@@ -62,6 +62,9 @@ std::string preprocessor_::readWord()
 
 std::vector<std::string> preprocessor_::convertWord(std::string word)
 {
+    /// TODO: Swap this order to:
+    // modifier -> lowercase -> removeNonexisting -> separate
+    // Does removeNonexisting really need to operate on a vector<string> ?
     return removeNonexisting(separate(lowercase(modifier(word))));
 }
 
@@ -134,6 +137,8 @@ std::string preprocessor_::modifier(std::string word)
 //     return 0x00;
 // }
 
+/// TODO: Should this be reworked to remove the ICU dependency?
+/// TODO: Get this to work on windows
 char preprocessor_::transliterateToASCII(std::string input) {
     icu::UnicodeString str = icu::UnicodeString::fromUTF8(input);
     UErrorCode status = U_ZERO_ERROR;
@@ -205,6 +210,7 @@ std::vector<std::string> preprocessor_::removeNonexisting(std::vector<std::strin
         outWords.push_back("");
         for(int j=0;j<inWords[i].size();j++)
         {
+            /// TODO: Add isExistingChar() helper to match isPunc()? Rename?
             if(existingChars.find(inWords[i][j]) != std::string::npos)
             {
                 outWords[i] += inWords[i][j];

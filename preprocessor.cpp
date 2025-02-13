@@ -140,21 +140,25 @@ std::string preprocessor_::modifier(std::string word)
 /// TODO: Should this be reworked to remove the ICU dependency?
 /// TODO: Get this to work on windows
 char preprocessor_::transliterateToASCII(std::string input) {
-    icu::UnicodeString str = icu::UnicodeString::fromUTF8(input);
-    UErrorCode status = U_ZERO_ERROR;
-    std::unique_ptr<icu::Transliterator> translit(
-        icu::Transliterator::createInstance("NFKD; [:Nonspacing Mark:] Remove; Any-Latin; Latin-ASCII", UTRANS_FORWARD, status));
+    try {
+        icu::UnicodeString str = icu::UnicodeString::fromUTF8(input);
+        UErrorCode status = U_ZERO_ERROR;
+        std::unique_ptr<icu::Transliterator> translit(
+            icu::Transliterator::createInstance("NFKD; [:Nonspacing Mark:] Remove; Any-Latin; Latin-ASCII", UTRANS_FORWARD, status));
 
-    if (U_FAILURE(status)) {
-        std::cerr << "Failed to create ICU Transliterator\n";
+        if (U_FAILURE(status)) {
+            std::cerr << "Failed to create ICU Transliterator\n";
+            return 0x00;
+        }
+
+        translit->transliterate(str);
+        std::string output;
+        str.toUTF8String(output);
+        return output[0]; // assuming output is not empty
+    } catch (const std::exception& e) {
+        std::cerr << "Exception occurred: " << e.what() << "\n";
         return 0x00;
     }
-
-    translit->transliterate(str);
-    std::string output;
-    str.toUTF8String(output);
-    // std::cout << "Transliterated: " << output << std::endl;
-    return output[0];
 }
 
 std::string preprocessor_::lowercase(std::string word)

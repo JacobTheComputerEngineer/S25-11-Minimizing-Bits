@@ -62,4 +62,5 @@ TEST_CASE("separation with punctuation", "[preprocessor]")
     ansV.push_back("!");
 
     REQUIRE(pre.removeNonexisting(pre.separate(pre.lowercase(pre.modifier("ȺⱣⱣĿɆ!")))) == ansV);
+    REQUIRE(pre.convertWord("ȺⱣⱣĿɆ!") == ansV);
 }

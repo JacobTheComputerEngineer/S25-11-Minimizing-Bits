@@ -10,7 +10,7 @@ TEST_CASE("example wordbank test", "[wordbank]") {
 
 TEST_CASE("test wordbank construct", "[wordbank]") {
     wordbank_ wb;
-    wb.construct("dictionary.txt");
+    wb.construct("tempdictionary.txt");
 
     REQUIRE(wb.contains_word("the"));
     REQUIRE(wb.contains_word("and"));
@@ -26,7 +26,7 @@ TEST_CASE("test wordbank construct", "[wordbank]") {
 
 TEST_CASE("test wordbank no 1 or 2 letter words", "[wordbank]") {
     wordbank_ wb;
-    wb.construct("dictionary.txt");
+    wb.construct("tempdictionary.txt");
 
     REQUIRE_FALSE(wb.contains_word("i"));
     REQUIRE_FALSE(wb.contains_word("a"));

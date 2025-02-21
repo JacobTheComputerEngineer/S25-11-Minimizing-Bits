@@ -13,7 +13,7 @@ class parser_
         //potentially more functions for reading the file
         void createOutputFile(const std::string& filename); //doubles as output file and erl file
         bool parseArguments(int argc, char* argv[], std::string& messageFile, std::string& dictionaryFile);
-        bool isFileEmpty(const std::string& filename);
+        bool isFileEmpty(const std::string& filename); // Add this line
 
     private:
         //can add members or functions if needed

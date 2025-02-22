@@ -17,13 +17,13 @@ TEST_CASE("encoder word test 1", "[encoder]") {
     bit_code_13_ testcode1{ "0110100101110" };
     bit_code_13_ testflush{ "0000000000000" };
 
-    std::ofstream clear("encodertest1.erl", std::ios::out | std::ios::trunc);
+    std::ofstream clear("encodertest0.erl", std::ios::out | std::ios::trunc);
     clear.close();
-    enc.printWord(testcode1, "encodertest1.erl");
-    enc.printWord(testflush, "encodertest1.erl");
-    std::ifstream read("encodertest1.erl", std::ios::binary);
+    enc.printWord(testcode1, "encodertest0.erl");
+    enc.printWord(testflush, "encodertest0.erl");
+    std::ifstream read("encodertest0.erl", std::ios::binary);
     unsigned long n;
-    read.read(reinterpret_cast<char*>(&n), sizeof(n));
+    read.read(reinterpret_cast<char*>(&n), 1);
     readbits = n;
 
     REQUIRE(!readbits.test(7));
@@ -31,7 +31,7 @@ TEST_CASE("encoder word test 1", "[encoder]") {
     {
         REQUIRE(readbits.test(i) == testcode1.test(i + 6));
     }
-    read.read(reinterpret_cast<char*>(&n), sizeof(n));
+    read.read(reinterpret_cast<char*>(&n), 1);
     readbits = n;
 
     for (std::size_t i = 7; i >= 2; i--)
@@ -55,7 +55,7 @@ TEST_CASE("encoder word test 2", "[encoder]") {
     enc.printWord(testflush, "encodertest1.erl");
     std::ifstream read("encodertest1.erl", std::ios::binary);
     unsigned long n;
-    read.read(reinterpret_cast<char*>(&n), sizeof(n));
+    read.read(reinterpret_cast<char*>(&n), 1);
     readbits = n;
 
     REQUIRE(!readbits.test(7));
@@ -63,7 +63,7 @@ TEST_CASE("encoder word test 2", "[encoder]") {
     {
         REQUIRE(readbits.test(i) == testcode1.test(i + 6));
     }
-    read.read(reinterpret_cast<char*>(&n), sizeof(n));
+    read.read(reinterpret_cast<char*>(&n), 1);
     readbits = n;
 
     for (std::size_t i = 7; i >= 2; i--)
@@ -87,7 +87,7 @@ TEST_CASE("encoder word test 3", "[encoder]") {
     enc.printWord(testflush, "encodertest1.erl");
     std::ifstream read("encodertest1.erl", std::ios::binary);
     unsigned long n;
-    read.read(reinterpret_cast<char*>(&n), sizeof(n));
+    read.read(reinterpret_cast<char*>(&n), 1);
     readbits = n;
 
     REQUIRE(!readbits.test(7));
@@ -95,7 +95,7 @@ TEST_CASE("encoder word test 3", "[encoder]") {
     {
         REQUIRE(readbits.test(i) == testcode1.test(i + 6));
     }
-    read.read(reinterpret_cast<char*>(&n), sizeof(n));
+    read.read(reinterpret_cast<char*>(&n), 1);
     readbits = n;
 
     for (std::size_t i = 7; i >= 2; i--)
@@ -119,7 +119,7 @@ TEST_CASE("encoder word test 4", "[encoder]") {
     enc.printWord(testflush, "encodertest1.erl");
     std::ifstream read("encodertest1.erl", std::ios::binary);
     unsigned long n;
-    read.read(reinterpret_cast<char*>(&n), sizeof(n));
+    read.read(reinterpret_cast<char*>(&n), 1);
     readbits = n;
 
     REQUIRE(!readbits.test(7));
@@ -127,7 +127,7 @@ TEST_CASE("encoder word test 4", "[encoder]") {
     {
         REQUIRE(readbits.test(i) == testcode1.test(i + 6));
     }
-    read.read(reinterpret_cast<char*>(&n), sizeof(n));
+    read.read(reinterpret_cast<char*>(&n), 1);
     readbits = n;
 
     for (std::size_t i = 7; i >= 2; i--)
@@ -151,7 +151,7 @@ TEST_CASE("encoder character test 1", "[encoder]") {
     enc.printWord(testflush, "encodertest1.erl");
     std::ifstream read("encodertest1.erl", std::ios::binary);
     unsigned long n;
-    read.read(reinterpret_cast<char*>(&n), sizeof(n));
+    read.read(reinterpret_cast<char*>(&n), 1);
     readbits = n;
 
     REQUIRE(readbits.test(7));
@@ -177,7 +177,7 @@ TEST_CASE("encoder character test 2", "[encoder]") {
     enc.printWord(testflush, "encodertest1.erl");
     std::ifstream read("encodertest1.erl", std::ios::binary);
     unsigned long n;
-    read.read(reinterpret_cast<char*>(&n), sizeof(n));
+    read.read(reinterpret_cast<char*>(&n), 1);
     readbits = n;
 
     REQUIRE(readbits.test(7));
@@ -203,7 +203,7 @@ TEST_CASE("encoder character test 3", "[encoder]") {
     enc.printWord(testflush, "encodertest1.erl");
     std::ifstream read("encodertest1.erl", std::ios::binary);
     unsigned long n;
-    read.read(reinterpret_cast<char*>(&n), sizeof(n));
+    read.read(reinterpret_cast<char*>(&n), 1);
     readbits = n;
 
     REQUIRE(readbits.test(7));
@@ -229,7 +229,7 @@ TEST_CASE("encoder character test 4", "[encoder]") {
     enc.printWord(testflush, "encodertest1.erl");
     std::ifstream read("encodertest1.erl", std::ios::binary);
     unsigned long n;
-    read.read(reinterpret_cast<char*>(&n), sizeof(n));
+    read.read(reinterpret_cast<char*>(&n), 1);
     readbits = n;
 
     REQUIRE(readbits.test(7));
@@ -268,7 +268,7 @@ TEST_CASE("mixed extensive test", "[encoder]") {
     std::ifstream read("encodertestmixed.erl", std::ios::binary);
     unsigned long n;
 
-    read.read(reinterpret_cast<char*>(&n), sizeof(n));
+    read.read(reinterpret_cast<char*>(&n), 1);
     readbits = n;
     REQUIRE(!readbits.test(7));
     for (int i = 6; i >= 0; i--)
@@ -276,7 +276,7 @@ TEST_CASE("mixed extensive test", "[encoder]") {
         REQUIRE(readbits.test(i) == testword1.test(i + 6));
     }
 
-    read.read(reinterpret_cast<char*>(&n), sizeof(n));
+    read.read(reinterpret_cast<char*>(&n), 1);
     readbits = n;
     for (int i = 7; i >= 2; i--)
     {
@@ -285,7 +285,7 @@ TEST_CASE("mixed extensive test", "[encoder]") {
     REQUIRE(readbits.test(1));
     REQUIRE(readbits.test(0) == testchar1.test(5));
 
-    read.read(reinterpret_cast<char*>(&n), sizeof(n));
+    read.read(reinterpret_cast<char*>(&n), 1);
     readbits = n;
     for (int i = 7; i >= 3; i--)
     {
@@ -295,14 +295,14 @@ TEST_CASE("mixed extensive test", "[encoder]") {
     REQUIRE(readbits.test(1) == testword2.test(12));
     REQUIRE(readbits.test(0) == testword2.test(11));
     
-    read.read(reinterpret_cast<char*>(&n), sizeof(n));
+    read.read(reinterpret_cast<char*>(&n), 1);
     readbits = n;
     for (int i = 7; i >= 0; i--)
     {
         REQUIRE(readbits.test(i) == testword2.test(i + 3));
     }
 
-    read.read(reinterpret_cast<char*>(&n), sizeof(n));
+    read.read(reinterpret_cast<char*>(&n), 1);
     readbits = n;
     for (int i = 7; i >= 5; i--)
     {
@@ -314,7 +314,7 @@ TEST_CASE("mixed extensive test", "[encoder]") {
         REQUIRE(readbits.test(i) == testchar2.test(i + 2));
     }
     
-    read.read(reinterpret_cast<char*>(&n), sizeof(n));
+    read.read(reinterpret_cast<char*>(&n), 1);
     readbits = n;
     REQUIRE(readbits.test(7) == testchar2.test(1));
     REQUIRE(readbits.test(6) == testchar2.test(0));
@@ -324,14 +324,14 @@ TEST_CASE("mixed extensive test", "[encoder]") {
         REQUIRE(readbits.test(i) == testword3.test(i + 8));
     }
 
-    read.read(reinterpret_cast<char*>(&n), sizeof(n));
+    read.read(reinterpret_cast<char*>(&n), 1);
     readbits = n;
     for (int i = 7; i >= 0; i--)
     {
         REQUIRE(readbits.test(i) == testword3.test(i));
     }
 
-    read.read(reinterpret_cast<char*>(&n), sizeof(n));
+    read.read(reinterpret_cast<char*>(&n), 1);
     readbits = n;
     REQUIRE(readbits.test(7));
     for (int i = 6; i >= 1; i--)
@@ -340,14 +340,14 @@ TEST_CASE("mixed extensive test", "[encoder]") {
     }
     REQUIRE(!readbits.test(0));
 
-    read.read(reinterpret_cast<char*>(&n), sizeof(n));
+    read.read(reinterpret_cast<char*>(&n), 1);
     readbits = n;
     for (int i = 7; i >= 0; i--)
     {
         REQUIRE(readbits.test(i) == testword4.test(i + 5));
     }
 
-    read.read(reinterpret_cast<char*>(&n), sizeof(n));
+    read.read(reinterpret_cast<char*>(&n), 1);
     readbits = n;
     for (int i = 7; i >= 3; i--)
     {
@@ -357,7 +357,7 @@ TEST_CASE("mixed extensive test", "[encoder]") {
     REQUIRE(readbits.test(1) == testchar4.test(5));
     REQUIRE(readbits.test(0) == testchar4.test(4));
 
-    read.read(reinterpret_cast<char*>(&n), sizeof(n));
+    read.read(reinterpret_cast<char*>(&n), 1);
     readbits = n;
     for (int i = 7; i >= 4; i--)
     {

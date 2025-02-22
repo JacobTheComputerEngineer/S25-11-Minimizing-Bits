@@ -94,7 +94,7 @@ bool encoder_::appendToFile(std::string filename)
 	if (write.is_open())									// If file was properly opened
 	{
 		unsigned long n = buffer.to_ulong();				// Convert buffer contents to long
-		write.write(reinterpret_cast<const char*>(&n), sizeof(n));	// Append encoding by appending the binary of the character represented by the contents of buffer
+		write.write(reinterpret_cast<const char*>(&n), 1);	// Append encoding by appending the binary of the character represented by the contents of buffer
 		write.close();										// Close the file
 	}
 	else

@@ -36,7 +36,6 @@ TEST_CASE("Decoder - Basic Decoding", "[decoder]") {
     std::ifstream file("decoderTtest.txt");
     std::string output((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
     
-    // Modify the expected output based on your expected decoded result
     //still need to make an expected output. I am guessing we will check this in tandem with encoder
     REQUIRE(output == "expected_output");
 }

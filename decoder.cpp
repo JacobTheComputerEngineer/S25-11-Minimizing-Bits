@@ -1,53 +1,11 @@
 #include "decoder.h"
 
+//***function moved to main for now, could come back***
 //function solely for checking file extension
-bool hasExtension(const std::string& filename, const std::string& extension) {
-    return filename.size() >= extension.size() &&
-           filename.compare(filename.size() - extension.size(), extension.size(), extension) == 0;
-}
-
-//this function opens the declared target files, input = .erl and output = .txt
-//then it 
-bool decoder_::decodeFile(const std::string& inputFilename, const std::string& outputFilename)
-{
-    // Ensure the input file has a .erl extension
-    if (!hasExtension(inputFilename, ".erl")) {
-        std::cerr << "Error: Input file must have a .erl extension.\n";
-        return false;
-    }
-
-    // Ensure the output file has a .txt extension
-    if (!hasExtension(outputFilename, ".txt")) {
-        std::cerr << "Error: Output file must have a .txt extension.\n";
-        return false;
-    }
-    
-    //make sure file opens
-    std::ifstream inputFile(inputFilename, std::ios::binary);
-    std::ofstream outputFile(outputFilename);
-    if (!inputFile.is_open() || !outputFile.is_open()) {
-        return false;
-    }
-    
-    while (!inputFile.eof()) {
-        bool tagBit;
-        if (!readNextBit(inputFile, tagBit)) break; //pull the next bit,if at the end of the file break
-        
-        if (tagBit) { // Character mode - 1
-            bit_code_6_ charBits;
-            if (!readBits(inputFile, 6, charBits)) break;//will read the next 6bits into wordbits
-            outputFile << wb.code_to_char(charBits);//find corresponding character and append to file
-        } else { // Word mode - 0
-            bit_code_13_ wordBits;//13 bit
-            if (!readBits(inputFile, 13, wordBits)) break; //will read the next 13bits into wordbits
-            outputFile << wb.code_to_word(wordBits) << " "; //find corresponding word and append to file
-        }
-    }
-    
-    inputFile.close(); //close files
-    outputFile.close();
-    return true; //if successful run through
-}
+// bool hasExtension(const std::string& filename, const std::string& extension) {
+//     return filename.size() >= extension.size() &&
+//            filename.compare(filename.size() - extension.size(), extension.size(), extension) == 0;
+// }
 
 
 //function reads next bit, and by reference updates the bit in decodeFile

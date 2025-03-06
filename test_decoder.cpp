@@ -1,48 +1,76 @@
 #include "catch.hpp"
-
 #include "decoder.h"
 #include <fstream>
-TEST_CASE("example decoder test", "[decoder]") {
-    decoder_ dec;
 
-    REQUIRE(true);
+// Utility function to write test data (clears file first)
+void writeTestData(const std::vector<uint8_t>& data) {
+    std::ofstream file("decoderBtest.erl", std::ios::binary | std::ios::trunc); // TRUNC clears previous contents
+    REQUIRE(file.is_open());  // Ensure file opens successfully
+    file.write(reinterpret_cast<const char*>(data.data()), data.size());
+    file.close();
 }
 
-TEST_CASE("Decoder - Valid File Extensions", "[decoder]") {
+TEST_CASE("Decoder - Read Next Bit", "[decoder]") {
     decoder_ dec;
-    REQUIRE(dec.decodeFile("decoderBtest.erl", "decoderTtest.txt") == true);
-}
 
-TEST_CASE("Decoder - Invalid Input File Extension", "[decoder]") {
-    decoder_ dec;
-    REQUIRE(dec.decodeFile("test.bin", "decoderTtest.txt") == false); // Wrong input extension
-}
+    // Write a test byte: 0b10101010 (0xAA)
+    writeTestData({0xAA});
 
-TEST_CASE("Decoder - Invalid Output File Extension", "[decoder]") {
-    decoder_ dec;
-    REQUIRE(dec.decodeFile("decoderBtest.erl", "output.bin") == false); // Wrong output extension
-}
+    std::ifstream file("decoderBtest.erl", std::ios::binary);
+    REQUIRE(file.is_open());
 
-TEST_CASE("Decoder - File Does Not Exist", "[decoder]") {
-    decoder_ dec;
-    REQUIRE(dec.decodeFile("nonexistent.erl", "decoderTtest.txt") == false);
-}
-
-TEST_CASE("Decoder - Basic Decoding", "[decoder]") {
-    decoder_ dec;
-    REQUIRE(dec.decodeFile("decoderBtest.erl", "decoderTtest.txt") == true);
+    bool bit;
+    REQUIRE(dec.readNextBit(file, bit) == true);
+    REQUIRE(bit == 1);
+    REQUIRE(dec.readNextBit(file, bit) == true);
+    REQUIRE(bit == 0);
+    REQUIRE(dec.readNextBit(file, bit) == true);
+    REQUIRE(bit == 1);
+    REQUIRE(dec.readNextBit(file, bit) == true);
+    REQUIRE(bit == 0);
+    REQUIRE(dec.readNextBit(file, bit) == true);
+    REQUIRE(bit == 1);
+    REQUIRE(dec.readNextBit(file, bit) == true);
+    REQUIRE(bit == 0);
+    REQUIRE(dec.readNextBit(file, bit) == true);
+    REQUIRE(bit == 1);
+    REQUIRE(dec.readNextBit(file, bit) == true);
+    REQUIRE(bit == 0);
     
-    // Read the expected output from the text file
-    std::ifstream file("decoderTtest.txt");
-    std::string output((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+    // No more bits should be available
+    REQUIRE(dec.readNextBit(file, bit) == false);
     
-    //still need to make an expected output. I am guessing we will check this in tandem with encoder
-    REQUIRE(output == "expected_output");
+    file.close();
 }
 
-TEST_CASE("Decoder - Handles Corrupt File", "[decoder]") {
+TEST_CASE("Decoder - Read 13-bit Word", "[decoder]") {
     decoder_ dec;
 
-    //still need to make a corrupted file version
-    REQUIRE(dec.decodeFile("corrupt.erl", "decoderTtest.txt") == false);
+    // Write a test word: 0b1010101010101010 (0xAAAA)
+    writeTestData({0xAA, 0xAA});
+
+    std::ifstream file("decoderBtest.erl", std::ios::binary);
+    REQUIRE(file.is_open());
+
+    bit_code_13_ wordBits;
+    REQUIRE(dec.readBits(file, 13, wordBits) == true);
+    REQUIRE(wordBits.to_ulong() == 0b1010101010101); // Only the first 13 bits should be read
+
+    file.close();
+}
+
+TEST_CASE("Decoder - Read 6-bit Character", "[decoder]") {
+    decoder_ dec;
+
+    // Write a test byte: 0b11001100 (0xCC)
+    writeTestData({0xCC});
+
+    std::ifstream file("decoderBtest.erl", std::ios::binary);
+    REQUIRE(file.is_open());
+
+    bit_code_6_ charBits;
+    REQUIRE(dec.readBits(file, 6, charBits) == true);
+    REQUIRE(charBits.to_ulong() == 0b110011); // Only the first 6 bits should be read
+
+    file.close();
 }

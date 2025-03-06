@@ -2,17 +2,6 @@
 
 #include "preprocessor.h"
 
-/// TODO: Test convertWord()
-/// TODO: Test $ and @ don't get converted to S and a
-
-TEST_CASE("example preprocessor test", "[preprocessor]") {
-    preprocessor_ pre;
-
-    // pre.preprocessorTestbench("preprocessorTestFile.txt");
-
-    REQUIRE(true);
-}
-
 TEST_CASE("setting up preprocessor", "[preprocessor]")
 {
     preprocessor_ pre;
@@ -21,46 +10,38 @@ TEST_CASE("setting up preprocessor", "[preprocessor]")
 
 }
 
-TEST_CASE("converting expected words", "[preprocessor]")
-{
-    preprocessor_ pre;
-    pre.setExistingChars("qwertyuiopasdfghjklzxcvbnm");
-
-    std::string ans = "apple";
-    std::vector<std::string> ansV;
-    ansV.push_back("apple");
-    REQUIRE(pre.modifier("apple") == ans);
-    REQUIRE(pre.lowercase(pre.modifier("apple")) == ans);
-    REQUIRE(pre.separate(pre.lowercase(pre.modifier("apple"))) == ansV);
-    REQUIRE(pre.removeNonexisting(pre.separate(pre.lowercase(pre.modifier("apple")))) == ansV);
-    
-    REQUIRE(pre.removeNonexisting(pre.separate(pre.lowercase(pre.modifier("Apple")))) == ansV);
-    REQUIRE(pre.removeNonexisting(pre.separate(pre.lowercase(pre.modifier("ApplE")))) == ansV);
-    REQUIRE(pre.removeNonexisting(pre.separate(pre.lowercase(pre.modifier("APPLE")))) == ansV);
-}
-
-TEST_CASE("converting unexpected words", "[preprocessor]")
-{
-    preprocessor_ pre;
-    pre.setExistingChars("qwertyuiopasdfghjklzxcvbnm");
-    std::vector<std::string> ansV;
-    ansV.push_back("apple");
-    REQUIRE(pre.removeNonexisting(pre.separate(pre.lowercase(pre.modifier("àṕṕĺḗ")))) == ansV);
-    REQUIRE(pre.removeNonexisting(pre.separate(pre.lowercase(pre.modifier("ĀṔṖĽĖ")))) == ansV);
-    REQUIRE(pre.removeNonexisting(pre.separate(pre.lowercase(pre.modifier("ĀṔṖĽĖ")))) == ansV);
-    REQUIRE(pre.removeNonexisting(pre.separate(pre.lowercase(pre.modifier("Ⱥƥƥŀɇ")))) == ansV);
-    REQUIRE(pre.removeNonexisting(pre.separate(pre.lowercase(pre.modifier("ȺⱣⱣĿɆ")))) == ansV);
-}
-
 TEST_CASE("separation with punctuation", "[preprocessor]")
 {
     preprocessor_ pre;
     pre.setExistingChars("qwertyuiopasdfghjklzxcvbnm,./?;:\'\"\\()!$%");
     pre.setPuncChars(",./?;:\'\"\\()!$%");
-    std::vector<std::string> ansV;
-    ansV.push_back("apple");
-    ansV.push_back("!");
 
-    REQUIRE(pre.removeNonexisting(pre.separate(pre.lowercase(pre.modifier("ȺⱣⱣĿɆ!")))) == ansV);
-    REQUIRE(pre.convertWord("ȺⱣⱣĿɆ!") == ansV);
+    std::vector<std::string> ansA;
+    ansA.push_back("apple");
+    REQUIRE(pre.convertWord("APPLE") == ansA);
+    ansA.push_back("!");
+    REQUIRE(pre.convertWord("apple!") == ansA);
+    ansA.push_back("!");
+    REQUIRE(pre.convertWord("apple!!") == ansA);
+
+    std::vector<std::string> ansB;
+    ansB.push_back("\"");
+    ansB.push_back("hi");
+    ansB.push_back("\"");
+    REQUIRE(pre.convertWord("\"hi\"") == ansB);
+
+    std::vector<std::string> ansC;
+    ansC.push_back("separate");
+    ansC.push_back("\'");
+    ansC.push_back("apostrophes");
+    REQUIRE(pre.convertWord("separate\'apostrophes") == ansC);
+
+    pre.setPuncChars(",./?;:\"\\()!$%");
+    std::vector<std::string> ansD;
+    ansD.push_back("together\'apostrophes");
+    REQUIRE(pre.convertWord("together\'apostrophes") == ansD);
+
+    std::vector<std::string> ansE;
+    ansE.push_back("unexpected?character");
+    REQUIRE(pre.convertWord("unexpected*character") == ansE);
 }

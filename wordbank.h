@@ -1,3 +1,5 @@
+#ifndef WORDBANK_H
+#define WORDBANK_H
 
 #include <string>
 #include <unordered_map>
@@ -41,3 +43,5 @@ class wordbank_
         void build_char_map();
 
 };
+
+#endif

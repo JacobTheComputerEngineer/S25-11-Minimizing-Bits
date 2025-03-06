@@ -1,15 +1,9 @@
 #include "decoder.h"
 #include "encoder.h"
 #include "parser.h"
-#include "preprocessor.h" // contains linux only header files
+#include "preprocessor.h"
 #include "wordbank.h"
 
-// need to do the following to get the headers
-// apt install libicu-dev
-// apt install pkg-config
-
-// use the following to compile
-// g++ -o test_icu main.cpp preprocessor.cpp $(pkg-config --cflags --libs icu-uc icu-i18n)
 
 class ERL
 {

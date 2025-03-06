@@ -1,3 +1,6 @@
+#ifndef ENCODER_H
+#define ENCODER_H
+
 #include <string>
 #include <bitset>
 #include <iostream>
@@ -23,3 +26,5 @@ private:
 	std::size_t index = 7;	// Marker of where to start filling buffer when new code is received so as not to overwrite leftover bits from past encoded word
 
 };
+
+#endif

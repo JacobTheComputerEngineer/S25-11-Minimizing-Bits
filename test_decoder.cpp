@@ -81,9 +81,8 @@ TEST_CASE("Decoder - Read Word, Char, Word", "[decoder]") {
 
     // Test data : word, char, word
     writeTestData({
-        0xAC, 0x1A,  // (0b1010110000011 010) first 16 bits (1 word, half char)
+        0x4C, 0x1A,  // (0b0100110000011 010) first 16 bits (1 word, half char)
         0xC9, 0xF3   // (0b110 0100111110011) second 16 bits (half char, 1 word)
-         
     });
 
     std::ifstream file("decoderBtest.erl", std::ios::binary);
@@ -92,7 +91,7 @@ TEST_CASE("Decoder - Read Word, Char, Word", "[decoder]") {
     // Read first 13-bit word
     bit_code_13_ firstWord;
     REQUIRE(dec.readWordBits(file, 13, firstWord) == true);
-    REQUIRE(firstWord.to_ulong() == 0b1010110000011);
+    REQUIRE(firstWord.to_ulong() == 0b0100110000011);
 
     // Read 6-bit character
     bit_code_6_ charBits;

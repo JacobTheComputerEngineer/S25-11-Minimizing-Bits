@@ -53,7 +53,7 @@ TEST_CASE("Decoder - Read 13-bit Word", "[decoder]") {
     REQUIRE(file.is_open());
 
     bit_code_13_ wordBits;
-    REQUIRE(dec.readBits(file, 13, wordBits) == true);
+    REQUIRE(dec.readWordBits(file, 13, wordBits) == true);
     REQUIRE(wordBits.to_ulong() == 0b1010110000011); // Only the first 13 bits should be read
 
     file.close();
@@ -62,15 +62,51 @@ TEST_CASE("Decoder - Read 13-bit Word", "[decoder]") {
 TEST_CASE("Decoder - Read 6-bit Character", "[decoder]") {
     decoder_ dec;
 
-    // Write a test byte: 0b11001100 (0xCC)
-    writeTestData({0xCC});
+    // Write a test byte: 0b11001001 (0xC9)
+    writeTestData({0xC9});
 
     std::ifstream file("decoderBtest.erl", std::ios::binary);
     REQUIRE(file.is_open());
 
     bit_code_6_ charBits;
-    REQUIRE(dec.readBits(file, 6, charBits) == true);
-    REQUIRE(charBits.to_ulong() == 0b110011); // Only the first 6 bits should be read //failed
+    REQUIRE(dec.readCharBits(file, 6, charBits) == true);
+    REQUIRE(charBits.to_ulong() == 0b110010); // Only the first 6 bits should be read //failed
+
+    file.close();
+}
+
+
+TEST_CASE("Decoder - Read Word, Char, Word", "[decoder]") {
+    decoder_ dec;
+
+    // Test data : word, char, word
+    writeTestData({
+        0xAC, 0x1A,  // (0b1010110000011 010) first 16 bits (1 word, half char)
+        0xC9, 0xF3   // (0b110 0100111110011) second 16 bits (half char, 1 word)
+         
+    });
+
+    std::ifstream file("decoderBtest.erl", std::ios::binary);
+    REQUIRE(file.is_open());
+
+    // Read first 13-bit word
+    bit_code_13_ firstWord;
+    REQUIRE(dec.readWordBits(file, 13, firstWord) == true);
+    REQUIRE(firstWord.to_ulong() == 0b1010110000011);
+
+    // Read 6-bit character
+    bit_code_6_ charBits;
+    REQUIRE(dec.readCharBits(file, 6, charBits) == true);
+    REQUIRE(charBits.to_ulong() == 0b010110);
+
+    // Read second 13-bit word
+    bit_code_13_ secondWord;
+    REQUIRE(dec.readWordBits(file, 13, secondWord) == true);
+    REQUIRE(secondWord.to_ulong() == 0b0100111110011);
+
+    // Ensure no more bits
+    bool bit;
+    REQUIRE(dec.readNextBit(file, bit) == false);
 
     file.close();
 }

@@ -103,11 +103,11 @@ int main(int argc, char *argv[])
 
         if (tagBit) { // Character mode - 1
             bit_code_6_ charBits;
-            if (!decoder.readBits(inputFile, 6, charBits)) break;
+            if (!decoder.readCharBits(inputFile, 6, charBits)) break;
             outputFile << wb.code_to_char(charBits);
         } else { // Word mode - 0
             bit_code_13_ wordBits;
-            if (!decoder.readBits(inputFile, 13, wordBits)) break;
+            if (!decoder.readWordBits(inputFile, 13, wordBits)) break;
             outputFile << wb.code_to_word(wordBits) << " ";
         }
     }

@@ -29,7 +29,7 @@ bool decoder_::readNextBit(std::ifstream &file, bool &bit)
 //function is called when tagbit is identified as word type
 //it will write by reference the 13 next bits into the wordbits from DecodeFile
 //returns true if bits are read successfully (no eof)
-bool decoder_::readBits(std::ifstream &file, int numBits, std::bitset<13> &bits)
+bool decoder_::readWordBits(std::ifstream &file, int numBits, std::bitset<13> &bits)
 {
     for (int i = numBits - 1; i >= 0; i--) {//run until all 6 bits are entered
         bool bit;
@@ -42,7 +42,7 @@ bool decoder_::readBits(std::ifstream &file, int numBits, std::bitset<13> &bits)
 //function is called when tagbit is identified as character type
 //it will write by reference the 6 next bits into the wordbits from DecodeFile
 //returns true if bits are read successfully (no eof)
-bool decoder_::readBits(std::ifstream &file, int numBits, std::bitset<6> &bits)
+bool decoder_::readCharBits(std::ifstream &file, int numBits, std::bitset<6> &bits)
 {
     for (int i = numBits - 1; i >= 0; i--) {//run until all 6 bits are entered
         bool bit;

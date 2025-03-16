@@ -1,10 +1,11 @@
 #include "catch.hpp"
 #include "decoder.h"
 #include <fstream>
+#include <cstdio> // For std::remove
 
-// Utility function to clear the test file
 void clearTestFile() {
-    std::ofstream file("decoderBtest.erl", std::ios::trunc);
+    std::remove("decoderBtest.erl"); // Delete the file if it exists
+    std::ofstream file("decoderBtest.erl", std::ios::binary); // Recreate the file
     file.close();
 }
 

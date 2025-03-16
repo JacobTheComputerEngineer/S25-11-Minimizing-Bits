@@ -2,9 +2,16 @@
 #include "decoder.h"
 #include <fstream>
 
+// Utility function to clear the test file
+void clearTestFile() {
+    std::ofstream file("decoderBtest.erl", std::ios::trunc);
+    file.close();
+}
+
 // Utility function to write test data (clears file first)
 void writeTestData(const std::vector<uint8_t>& data) {
-    std::ofstream file("decoderBtest.erl", std::ios::binary | std::ios::trunc); // TRUNC clears previous contents
+    clearTestFile(); // Ensure file is cleared before writing
+    std::ofstream file("decoderBtest.erl", std::ios::binary);
     REQUIRE(file.is_open());  // Ensure file opens successfully
     file.write(reinterpret_cast<const char*>(data.data()), data.size());
     file.close();

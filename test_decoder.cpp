@@ -43,6 +43,22 @@ TEST_CASE("Decoder - Read Next Bit", "[decoder]") {
     file.close();
 }
 
+TEST_CASE("Decoder - Read 6-bit Character", "[decoder]") {
+    decoder_ dec;
+
+    // Write a test byte: 0b11001001 (0xC9)
+    writeTestData({0xC9});
+
+    std::ifstream file("decoderBtest.erl", std::ios::binary);
+    REQUIRE(file.is_open());
+
+    bit_code_6_ charBits;
+    REQUIRE(dec.readCharBits(file, 6, charBits) == true);
+    REQUIRE(charBits.to_ulong() == 0b110010); // Only the first 6 bits should be read //failed
+
+    file.close();
+}
+
 TEST_CASE("Decoder - Read 13-bit Word", "[decoder]") {
     decoder_ dec;
 
@@ -59,21 +75,7 @@ TEST_CASE("Decoder - Read 13-bit Word", "[decoder]") {
     file.close();
 }
 
-TEST_CASE("Decoder - Read 6-bit Character", "[decoder]") {
-    decoder_ dec;
 
-    // Write a test byte: 0b11001001 (0xC9)
-    writeTestData({0xC9});
-
-    std::ifstream file("decoderBtest.erl", std::ios::binary);
-    REQUIRE(file.is_open());
-
-    bit_code_6_ charBits;
-    REQUIRE(dec.readCharBits(file, 6, charBits) == true);
-    REQUIRE(charBits.to_ulong() == 0b110010); // Only the first 6 bits should be read //failed
-
-    file.close();
-}
 
 
 TEST_CASE("Decoder - Read Word, Char, Word", "[decoder]") {

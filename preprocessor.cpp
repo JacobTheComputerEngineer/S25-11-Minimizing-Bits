@@ -38,6 +38,11 @@ std::vector<std::string> preprocessor_::convertWord(std::string word)
     return removeNonexisting(separate(lowercase(word)));
 }
 
+bool preprocessor_::fileGood()
+{
+    return iFile.good() && !iFile.eof();
+}
+
 std::string preprocessor_::lowercase(std::string word)
 {
     for(int i=0;i<word.size();i++)

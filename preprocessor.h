@@ -22,6 +22,8 @@ class preprocessor_
 
         std::vector<std::string> convertWord(std::string word);
 
+        bool fileGood();
+
     private:
 
         // Data members

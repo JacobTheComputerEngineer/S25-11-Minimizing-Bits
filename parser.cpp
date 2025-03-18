@@ -31,8 +31,8 @@ void parser_::createOutputFile(const std::string& filename)
 
 bool parser_::parseArguments(int argc, char* argv[], std::string& messageFile, std::string& dictionaryFile)
 {
-    if (argc != 3) {
-        std::cerr << "Usage: " << argv[0] << " <message_file> <dictionary_file>" << std::endl;
+    if (argc != 4) {
+        std::cerr << "Usage: " << argv[0] << " <message_file> <dictionary_file> <output_file>" << std::endl;
         return false;
     }
 

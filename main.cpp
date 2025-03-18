@@ -68,56 +68,91 @@ class ERL
 
 };
 
+int demoEncode(int argc, char *argv[])
+{
+    std::string outfileName, messageFileName, dictName;
+    ERL erl;
+    erl.par.parseArguments(argc, argv, messageFileName, dictName);
+    outfileName = argv[3];
+    erl.par.createOutputFile(outfileName);
+    std::ifstream input(messageFileName);
+    erl.wb.construct(dictName);
+    erl.pre.setUp(messageFileName, erl.wb.getExistingChars(), erl.wb.getPunctuationChars());
+
+    if( erl.enc.printWord(erl.wb.word_to_code("information"),outfileName) ) std::cout<<"Success!\n";
+
+    // while(erl.pre.fileGood())
+    // {
+    //     std::vector<std::string> word;
+    //     word[0] = erl.pre.readWord();
+    //     word = erl.pre.convertWord(word[0]);
+
+    //     for(int i=0;i<word.size();i++)
+    //     {
+    //         if(erl.wb.contains_word(word.at(i)))
+    //         {
+    //             erl.enc.printWord(erl.wb.word_to_code(word.at(i)),outFileName);
+    //         }
+    //         else
+    //         {
+    //             erl.enc.printCharacter(erl.wb.char_to_code(word.at(i)),outFileName);
+    //         }
+    //     }
+    // }
+
+    return 0;
+}
+
 int main(int argc, char *argv[])
 {
-    ERL erl;
+//     ERL erl;
 
-    std::cout << "Running ERL correctly..." << std::endl;
+//     std::cout << "Running ERL correctly..." << std::endl;
 
 
 
-//decoder function, saving in main sothat decoder.cpp is complete
-    decoder_ decoder;
-    wordbank_ wb;
-    std::string inputFilename = "DecoderBtest.erl";
-    std::string outputFilename = "DecoderTtest.txt";
-    if (!hasExtension(inputFilename, ".erl")) {
-        std::cerr << "Error: Input file must have a .erl extension.\n";
-        return 1;
-    }
+// //decoder function, saving in main sothat decoder.cpp is complete
+//     decoder_ decoder;
+//     wordbank_ wb;
+//     std::string inputFilename = "DecoderBtest.erl";
+//     std::string outputFilename = "DecoderTtest.txt";
+//     if (!hasExtension(inputFilename, ".erl")) {
+//         std::cerr << "Error: Input file must have a .erl extension.\n";
+//         return 1;
+//     }
 
-    if (!hasExtension(outputFilename, ".txt")) {
-        std::cerr << "Error: Output file must have a .txt extension.\n";
-        return 1;
-    }
+//     if (!hasExtension(outputFilename, ".txt")) {
+//         std::cerr << "Error: Output file must have a .txt extension.\n";
+//         return 1;
+//     }
 
-    std::ifstream inputFile(inputFilename, std::ios::binary);
-    std::ofstream outputFile(outputFilename);
-    if (!inputFile.is_open() || !outputFile.is_open()) {
-        std::cerr << "Error: Unable to open input or output file.\n";
-        return 1;
-    }
-    while (!inputFile.eof()) {
-        bool tagBit;
-        if (!decoder.readNextBit(inputFile, tagBit)) break;
+//     std::ifstream inputFile(inputFilename, std::ios::binary);
+//     std::ofstream outputFile(outputFilename);
+//     if (!inputFile.is_open() || !outputFile.is_open()) {
+//         std::cerr << "Error: Unable to open input or output file.\n";
+//         return 1;
+//     }
+//     while (!inputFile.eof()) {
+//         bool tagBit;
+//         if (!decoder.readNextBit(inputFile, tagBit)) break;
 
-        if (tagBit) { // Character mode - 1
-            bit_code_6_ charBits;
-            if (!decoder.readCharBits(inputFile, 6, charBits)) break;
-            outputFile << wb.code_to_char(charBits);
-        } else { // Word mode - 0
-            bit_code_13_ wordBits;
-            if (!decoder.readWordBits(inputFile, 13, wordBits)) break;
-            outputFile << wb.code_to_word(wordBits) << " ";
-        }
-    }
-    inputFile.close();
-    outputFile.close();
-    std::cout << "Decoding complete. Output saved to " << outputFilename << "\n";
+//         if (tagBit) { // Character mode - 1
+//             bit_code_6_ charBits;
+//             if (!decoder.readCharBits(inputFile, 6, charBits)) break;
+//             outputFile << wb.code_to_char(charBits);
+//         } else { // Word mode - 0
+//             bit_code_13_ wordBits;
+//             if (!decoder.readWordBits(inputFile, 13, wordBits)) break;
+//             outputFile << wb.code_to_word(wordBits) << " ";
+//         }
+//     }
+//     inputFile.close();
+//     outputFile.close();
+//     std::cout << "Decoding complete. Output saved to " << outputFilename << "\n";
 //end decoder save
 
 
-
+    demoEncode(argc, argv);
 
     return 0;
 }

@@ -79,26 +79,31 @@ int demoEncode(int argc, char *argv[])
     erl.wb.construct(dictName);
     erl.pre.setUp(messageFileName, erl.wb.getExistingChars(), erl.wb.getPunctuationChars());
 
-    if( erl.enc.printWord(erl.wb.word_to_code("information"),outfileName) ) std::cout<<"Success!\n";
+    // bit_code_13_ code = erl.wb.word_to_code("knights");
 
-    // while(erl.pre.fileGood())
-    // {
-    //     std::vector<std::string> word;
-    //     word[0] = erl.pre.readWord();
-    //     word = erl.pre.convertWord(word[0]);
+    // if( erl.enc.printWord(code, outfileName) ) std::cout<<"Code : "<<code<<"\nSuccess!\n";
 
-    //     for(int i=0;i<word.size();i++)
-    //     {
-    //         if(erl.wb.contains_word(word.at(i)))
-    //         {
-    //             erl.enc.printWord(erl.wb.word_to_code(word.at(i)),outFileName);
-    //         }
-    //         else
-    //         {
-    //             erl.enc.printCharacter(erl.wb.char_to_code(word.at(i)),outFileName);
-    //         }
-    //     }
-    // }
+    while(erl.pre.fileGood())
+    {
+        std::vector<std::string> word;
+        word[0] = erl.pre.readWord();
+        word = erl.pre.convertWord(word[0]);
+
+        for(int i=0;i<word.size();i++)
+        {
+            if(erl.wb.contains_word(word.at(i)))
+            {
+                erl.enc.printWord(erl.wb.word_to_code(word.at(i)),outfileName);
+            }
+            else
+            {
+                erl.enc.printCharacter(erl.wb.char_to_code(word.at(i)),outfileName);
+            }
+        }
+    }
+
+    bit_code_13_ flush = 0;
+    erl.enc.printWord(flush, outfileName);
 
     return 0;
 }

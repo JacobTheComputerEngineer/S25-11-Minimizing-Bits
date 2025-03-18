@@ -83,22 +83,34 @@ int demoEncode(int argc, char *argv[])
 
     // if( erl.enc.printWord(code, outfileName) ) std::cout<<"Code : "<<code<<"\nSuccess!\n";
 
+    bit_code_13_ wordCode;
+    bit_code_6_ charCode;
     while(erl.pre.fileGood())
     {
+        // std::cout<<"AHHH";
         std::vector<std::string> word;
-        word[0] = erl.pre.readWord();
+        word.push_back(erl.pre.readWord());
         word = erl.pre.convertWord(word[0]);
 
         for(int i=0;i<word.size();i++)
         {
+            std::cout<<"Thing : "<<word[i];
             if(erl.wb.contains_word(word.at(i)))
             {
-                erl.enc.printWord(erl.wb.word_to_code(word.at(i)),outfileName);
+                wordCode = erl.wb.word_to_code(word.at(i));
+                std::cout<<"\tCode : "<<wordCode<<"\n";
+                if( ! erl.enc.printWord(wordCode,outfileName) ) std::cout<<"Failed at word : "<<word.at(i)<<"\n";
             }
             else
             {
-                erl.enc.printCharacter(erl.wb.char_to_code(word.at(i)),outfileName);
+                for(int j=0;j<word.at(i).size();j++)
+                {
+                    charCode = erl.wb.char_to_code(word.at(i).substr(j,1));
+                    std::cout<<"\tCode : "<<charCode<<"\n";
+                    if( ! erl.enc.printCharacter(charCode,outfileName) ) std::cout<<"Failed at char : "<<word.at(i).substr(j,1)<<"\n";
+                }
             }
+
         }
     }
 

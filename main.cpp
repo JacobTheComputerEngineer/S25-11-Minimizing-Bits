@@ -40,7 +40,7 @@ class ERL
 
 
 
-        decoder_ decoder;
+        decoder_ dec;
         // TO DO : 
 
 
@@ -68,6 +68,10 @@ class ERL
 
 };
 
+// bbedit
+// print out file size
+// get vscode extension that shows bits
+
 int demoEncode(int argc, char *argv[])
 {
     std::string outfileName, messageFileName, dictName;
@@ -79,26 +83,20 @@ int demoEncode(int argc, char *argv[])
     erl.wb.construct(dictName);
     erl.pre.setUp(messageFileName, erl.wb.getExistingChars(), erl.wb.getPunctuationChars());
 
-    // bit_code_13_ code = erl.wb.word_to_code("knights");
-
-    // if( erl.enc.printWord(code, outfileName) ) std::cout<<"Code : "<<code<<"\nSuccess!\n";
-
     bit_code_13_ wordCode;
     bit_code_6_ charCode;
     while(erl.pre.fileGood())
     {
-        // std::cout<<"AHHH";
         std::vector<std::string> word;
         word.push_back(erl.pre.readWord());
+        if(word.at(0).size() == 0) break;
         word = erl.pre.convertWord(word[0]);
 
         for(int i=0;i<word.size();i++)
         {
-            std::cout<<"Thing : "<<word[i];
             if(erl.wb.contains_word(word.at(i)))
             {
                 wordCode = erl.wb.word_to_code(word.at(i));
-                std::cout<<"\tCode : "<<wordCode<<"\n";
                 if( ! erl.enc.printWord(wordCode,outfileName) ) std::cout<<"Failed at word : "<<word.at(i)<<"\n";
             }
             else
@@ -106,17 +104,49 @@ int demoEncode(int argc, char *argv[])
                 for(int j=0;j<word.at(i).size();j++)
                 {
                     charCode = erl.wb.char_to_code(word.at(i).substr(j,1));
-                    std::cout<<"\tCode : "<<charCode<<"\n";
                     if( ! erl.enc.printCharacter(charCode,outfileName) ) std::cout<<"Failed at char : "<<word.at(i).substr(j,1)<<"\n";
                 }
             }
-
         }
     }
 
     bit_code_13_ flush = 0;
     erl.enc.printWord(flush, outfileName);
 
+    return 0;
+}
+
+int demoDecode(int argc, char *argv[])
+{
+    std::string outfileName, messageFileName, dictName;
+    ERL erl;
+    erl.par.parseArguments(argc, argv, messageFileName, dictName);
+    outfileName = argv[3];
+    erl.par.createOutputFile(outfileName);
+    std::ifstream input(messageFileName, std::ios::binary);
+    std::ofstream output(outfileName);
+    erl.wb.construct(dictName);
+
+    bool bit;
+    bit_code_13_ wordCode;
+    bit_code_6_ charCode;
+    std::string word;
+    while(erl.dec.readNextBit(input, bit))
+    {
+        if(bit)
+        {
+            erl.dec.readCharBits(input, charCode);
+            word = erl.wb.code_to_char(charCode);
+            output << word;
+        }
+        else
+        {
+            erl.dec.readWordBits(input, wordCode);
+            word = erl.wb.code_to_word(wordCode);
+            output << " " << word << " ";
+        }
+    }
+    std::cout<<"Finished =)\n";
     return 0;
 }
 
@@ -169,7 +199,8 @@ int main(int argc, char *argv[])
 //end decoder save
 
 
-    demoEncode(argc, argv);
+    // demoEncode(argc, argv);
+    demoDecode(argc, argv);
 
     return 0;
 }

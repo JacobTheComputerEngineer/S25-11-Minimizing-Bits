@@ -70,7 +70,15 @@ class ERL
 
 // bbedit
 // print out file size
-// get vscode extension that shows bits
+
+std::streampos getFileSize(const std::string& fileName) {
+    std::ifstream file(fileName, std::ios::binary | std::ios::ate);  // Open file in binary mode, and move the read pointer to the end
+    if (!file.is_open()) {
+        std::cerr << "Error: Could not open the file!" << std::endl;
+        return -1;
+    }
+    return file.tellg();  // tellg() returns the current position of the read pointer, which is at the end of the file
+}
 
 int demoEncode(int argc, char *argv[])
 {
@@ -113,6 +121,9 @@ int demoEncode(int argc, char *argv[])
     bit_code_13_ flush = 0;
     erl.enc.printWord(flush, outfileName);
 
+    std::cout<<"Size of original: "<<getFileSize(messageFileName)<<"\n";
+    std::cout<<"Size of erl: "<<getFileSize(outfileName)<<"\n";
+
     return 0;
 }
 
@@ -146,7 +157,10 @@ int demoDecode(int argc, char *argv[])
             output << " " << word << " ";
         }
     }
-    std::cout<<"Finished =)\n";
+    
+    std::cout<<"Size of erl: "<<getFileSize(messageFileName)<<"\n";
+    std::cout<<"Size of decoded: "<<getFileSize(outfileName)<<"\n";
+
     return 0;
 }
 

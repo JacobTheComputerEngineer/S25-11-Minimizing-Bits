@@ -7,12 +7,10 @@
 #include <string>
 #include <iostream>
 #include <fstream>
-// need to do the following to get the headers
-// apt install libicu-dev
-// apt install pkg-config
 
-// use the following to compile
-// g++ -o test_icu main.cpp preprocessor.cpp $(pkg-config --cflags --libs icu-uc icu-i18n)
+// TODO
+// Digraphs
+// maybe newlines
 
 //function solely for checking file extension
 bool hasExtension(const std::string& filename, const std::string& extension) {
@@ -109,11 +107,13 @@ int demoEncode(int argc, char *argv[])
             }
             else
             {
+                // std::cout << "Printing by char\n";
                 for(int j=0;j<word.at(i).size();j++)
                 {
                     charCode = erl.wb.char_to_code(word.at(i).substr(j,1));
                     if( ! erl.enc.printCharacter(charCode,outfileName) ) std::cout<<"Failed at char : "<<word.at(i).substr(j,1)<<"\n";
                 }
+                if(!erl.enc.printCharacter(erl.wb.char_to_code("*"),outfileName)) std::cout<<"Failed adding *\n";
             }
         }
     }
@@ -154,7 +154,7 @@ int demoDecode(int argc, char *argv[])
         {
             erl.dec.readWordBits(input, wordCode);
             word = erl.wb.code_to_word(wordCode);
-            output << " " << word << " ";
+            output << word << " ";
         }
     }
     
@@ -213,8 +213,8 @@ int main(int argc, char *argv[])
 //end decoder save
 
 
-    // demoEncode(argc, argv);
-    demoDecode(argc, argv);
+    demoEncode(argc, argv);
+    // demoDecode(argc, argv);
 
     return 0;
 }

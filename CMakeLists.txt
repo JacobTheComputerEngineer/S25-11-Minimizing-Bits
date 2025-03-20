@@ -74,12 +74,12 @@ add_executable(erl main.cpp ${LIB_SOURCE})
 # Compile unittests binary
 add_executable(unittests catch.hpp ${TEST_SOURCE} ${LIB_SOURCE})
 
-# Find and link ICU libraries
-find_package(ICU REQUIRED COMPONENTS uc i18n)
-target_include_directories(erl PRIVATE ${ICU_INCLUDE_DIRS})
-target_link_libraries(erl PRIVATE ${ICU_LIBRARIES})
-target_include_directories(unittests PRIVATE ${ICU_INCLUDE_DIRS})
-target_link_libraries(unittests PRIVATE ${ICU_LIBRARIES})
+# # Find and link ICU libraries
+# find_package(ICU REQUIRED COMPONENTS uc i18n)
+# target_include_directories(erl PRIVATE ${ICU_INCLUDE_DIRS})
+# target_link_libraries(erl PRIVATE ${ICU_LIBRARIES})
+# target_include_directories(unittests PRIVATE ${ICU_INCLUDE_DIRS})
+# target_link_libraries(unittests PRIVATE ${ICU_LIBRARIES})
 
 # Enable code coverage generation
 if(UNIX AND NOT APPLE AND CMAKE_COMPILER_IS_GNUCXX AND COVERAGE)

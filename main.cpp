@@ -113,7 +113,7 @@ int demoEncode(int argc, char *argv[])
                     charCode = erl.wb.char_to_code(word.at(i).substr(j,1));
                     if( ! erl.enc.printCharacter(charCode,outfileName) ) std::cout<<"Failed at char : "<<word.at(i).substr(j,1)<<"\n";
                 }
-                if(!erl.enc.printCharacter(erl.wb.char_to_code("*"),outfileName)) std::cout<<"Failed adding *\n";
+                if(!erl.enc.printCharacter(erl.wb.char_to_code(" "),outfileName)) std::cout<<"Failed adding *\n";
             }
         }
     }

@@ -114,7 +114,7 @@ int demoEncode(int argc, char *argv[])
                     {
                         charCode = erl.wb.char_to_code(word.at(i).substr(j, 2));    // Assign single character code for 2 characters
                         j++;                                                        // Additional increment to j
-                        if (!erl.enc.printCharacter(charCode, outfileName)) std::cout << "Failed at char : " << word.at(i).substr(j-1, 1) << "\n";  // Use enc to print character code
+                        if (!erl.enc.printCharacter(charCode, outfileName)) std::cout << "Failed at char : " << word.at(i).substr(j-1, 2) << "\n";  // Use enc to print character code
                     }
                     else
                     {

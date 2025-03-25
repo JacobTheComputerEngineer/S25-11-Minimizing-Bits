@@ -67,17 +67,17 @@ TEST_CASE("Decoder - Read Word, Char, Word", "[decoder]") {
 
     // Read first 13-bit word
     bit_code_13_ firstWord;
-    REQUIRE(dec.readWordBits(file, 13, firstWord) == true);
+    REQUIRE(dec.readWordBits(file, firstWord) == true); // MV 3/25/25 - Edited readWordBits and readCharBits calls to reflect the reduced number of parameters
     REQUIRE(firstWord.to_ulong() == 0b0100110000011);
 
     // Read 6-bit character
     bit_code_6_ charBits;
-    REQUIRE(dec.readCharBits(file, 6, charBits) == true);
+    REQUIRE(dec.readCharBits(file, charBits) == true);
     REQUIRE(charBits.to_ulong() == 0b010110);
 
     // Read second 13-bit word
     bit_code_13_ secondWord;
-    REQUIRE(dec.readWordBits(file, 13, secondWord) == true);
+    REQUIRE(dec.readWordBits(file, secondWord) == true);
     REQUIRE(secondWord.to_ulong() == 0b0100111110011);
 
     // Ensure no more bits

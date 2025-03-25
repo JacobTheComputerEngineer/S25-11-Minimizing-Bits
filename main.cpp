@@ -110,8 +110,17 @@ int demoEncode(int argc, char *argv[])
                 // std::cout << "Printing by char\n";
                 for(int j=0;j<word.at(i).size();j++)
                 {
-                    charCode = erl.wb.char_to_code(word.at(i).substr(j,1));
-                    if( ! erl.enc.printCharacter(charCode,outfileName) ) std::cout<<"Failed at char : "<<word.at(i).substr(j,1)<<"\n";
+                    if (erl.wb.contains_char(word.at(i).substr(j, 2)))      // Check for digraphs to assign a single 6-bit character code to 2 adjacent letters
+                    {
+                        charCode = erl.wb.char_to_code(word.at(i).substr(j, 2));    // Assign single character code for 2 characters
+                        j++;                                                        // Additional increment to j
+                        if (!erl.enc.printCharacter(charCode, outfileName)) std::cout << "Failed at char : " << word.at(i).substr(j-1, 1) << "\n";  // Use enc to print character code
+                    }
+                    else
+                    {
+                        charCode = erl.wb.char_to_code(word.at(i).substr(j, 1));    // Standard 6-bit code assignment for a single character in input .txt
+                        if (!erl.enc.printCharacter(charCode, outfileName)) std::cout << "Failed at char : " << word.at(i).substr(j, 1) << "\n";    // Use enc to print character code
+                    }
                 }
                 if(!erl.enc.printCharacter(erl.wb.char_to_code(" "),outfileName)) std::cout<<"Failed adding *\n";
             }
@@ -148,13 +157,19 @@ int demoDecode(int argc, char *argv[])
         {
             erl.dec.readCharBits(input, charCode);
             word = erl.wb.code_to_char(charCode);
-            output << word;
+            if (!input.eof())                       // MV 3/25/25 - Resolved an issue where decoder was printing flush word to output .txt; must ignore final word code printed to erl
+            {
+                output << word;
+            }
         }
         else
         {
             erl.dec.readWordBits(input, wordCode);
             word = erl.wb.code_to_word(wordCode);
-            output << word << " ";
+            if (!input.eof())
+            {
+                output << word << " ";
+            }
         }
     }
     

@@ -31,7 +31,7 @@ bool decoder_::readNextBit(std::ifstream &file, bool &bit)
 //returns true if bits are read successfully (no eof)
 bool decoder_::readWordBits(std::ifstream &file, std::bitset<13> &bits)
 {
-    for (int i = 13 - 1; i >= 0; i--) {//run until all 6 bits are entered
+    for (int i = 13 - 1; i >= 0; i--) {//run until all 13 bits are entered
         bool bit;
         if (!readNextBit(file, bit)) return false;
         bits.set(i, bit);//append each bit

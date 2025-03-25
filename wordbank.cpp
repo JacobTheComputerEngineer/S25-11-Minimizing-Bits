@@ -25,6 +25,10 @@ bool wordbank_::contains_word(const std::string& word) const {
     return forward_word_map.find(word) != forward_word_map.end();
 }
 
+bool wordbank_::contains_char(const std::string& c) const {     // MV 3/25/25 - Used for digraph checking
+    return forward_char_map.find(c) != forward_char_map.end();
+}
+
 // TODO: Adjust these as needed
 std::string wordbank_::getExistingChars() {
     return "abcdefghijklmnopqrstuvwxyz0123456789.,?!-+=/:;()\'\"~@#$%&*";

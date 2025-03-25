@@ -28,6 +28,7 @@ class wordbank_
 
         // Helper functions
         bool contains_word(const std::string& word) const;
+        bool contains_char(const std::string& c) const;     // MV 3/25/25 - Used for digraph checking
         static std::string getExistingChars();
         static std::string getPunctuationChars();
 

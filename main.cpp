@@ -212,9 +212,14 @@ int main(int argc, char *argv[])
 //     std::cout << "Decoding complete. Output saved to " << outputFilename << "\n";
 //end decoder save
 
+    if (argc != 4) {
+        std::cerr << "Usage: " << argv[0] << " <message_file> <dictionary_file> <output_file>" << std::endl;
+        return 0;
+    }
 
-    demoEncode(argc, argv);
-    // demoDecode(argc, argv);
-
+    std::string input(argv[1]);
+         if (input.find(".txt") != std::string::npos ) demoEncode(argc, argv);
+    else if (input.find(".erl") != std::string::npos ) demoDecode(argc, argv);
+    else std::cerr << "message_file must be of type .txt or .erl\n";
     return 0;
 }

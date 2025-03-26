@@ -91,3 +91,6 @@ if(UNIX AND NOT APPLE AND CMAKE_COMPILER_IS_GNUCXX AND COVERAGE)
     COMMAND ${CMAKE_COMMAND} -E env "ROOT=${CMAKE_CURRENT_SOURCE_DIR}"
     ${CMAKE_CURRENT_SOURCE_DIR}/scripts/coverage.sh)
 endif()
+
+# Copy testing files to build directory automatically
+file(COPY ${CMAKE_SOURCE_DIR}/tests/ DESTINATION ${CMAKE_BINARY_DIR})

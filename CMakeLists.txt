@@ -93,4 +93,10 @@ if(UNIX AND NOT APPLE AND CMAKE_COMPILER_IS_GNUCXX AND COVERAGE)
 endif()
 
 # Copy testing files to build directory automatically
-file(COPY ${CMAKE_SOURCE_DIR}/tests/ DESTINATION ${CMAKE_BINARY_DIR})
+if(UNIX AND NOT APPLE AND CMAKE_COMPILER_IS_GNUCXX)
+  # Assume Linux Docker
+  file(COPY ${CMAKE_SOURCE_DIR}/tests/ DESTINATION ${CMAKE_BINARY_DIR})
+else()
+  # Assume Windows Visual Studio
+  file(COPY ${CMAKE_SOURCE_DIR}/tests/ DESTINATION ${CMAKE_BINARY_DIR}/Debug)
+endif()

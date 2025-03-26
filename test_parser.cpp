@@ -31,9 +31,10 @@ TEST_CASE("Test argument parsing", "[parser]") {
     parser_ par;
     std::string messageFile = "testparser.txt";
     std::string dictionaryFile = "dictionary.txt";
+    std::string outputFile = "output.erl";
     //check if the arguments are parsed correctly
-    char* validArgs[] = { (char*)"program", (char*)"testparser.txt", (char*)"dictionary.txt" };
-    REQUIRE(par.parseArguments(3, validArgs, messageFile, dictionaryFile) == true);
+    char* validArgs[] = { (char*)"program", (char*)"testparser.txt", (char*)"dictionary.txt", (char*)"output.erl" };
+    REQUIRE(par.parseArguments(4, validArgs, messageFile, dictionaryFile) == true);
     REQUIRE(messageFile == "testparser.txt");
     REQUIRE(dictionaryFile == "dictionary.txt");
 }

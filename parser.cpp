@@ -40,10 +40,12 @@ bool parser_::parseArguments(int argc, char* argv[], std::string& messageFile, s
     dictionaryFile = argv[2];
 
     if (!isValidFile(messageFile)) {
+        std::cerr << "Error: Message file invalid" << std::endl;
         return false;
     }
 
     if (!isValidFile(dictionaryFile)) {
+        std::cerr << "Error: Dictionary file invalid" << std::endl;
         return false;
     }
 

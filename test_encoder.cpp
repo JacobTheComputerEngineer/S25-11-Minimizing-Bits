@@ -19,8 +19,13 @@ TEST_CASE("encoder word test 1", "[encoder]") {
 
     std::ofstream clear("encodertest0.erl", std::ios::out | std::ios::trunc);
     clear.close();
-    enc.printWord(testcode1, "encodertest0.erl");
-    enc.printWord(testflush, "encodertest0.erl");
+
+    enc.setOutputFile("encodertest0.erl");
+
+    enc.printWord(testcode1);
+    enc.printWord(testflush);
+    enc.closeOutputFile();
+
     std::ifstream read("encodertest0.erl", std::ios::binary);
     unsigned long n;
     read.read(reinterpret_cast<char*>(&n), 1);
@@ -51,8 +56,13 @@ TEST_CASE("encoder word test 2", "[encoder]") {
 
     std::ofstream clear("encodertest1.erl", std::ios::out | std::ios::trunc);
     clear.close();
-    enc.printWord(testcode1, "encodertest1.erl");
-    enc.printWord(testflush, "encodertest1.erl");
+
+    enc.setOutputFile("encodertest1.erl");
+
+    enc.printWord(testcode1);
+    enc.printWord(testflush);
+    enc.closeOutputFile();
+
     std::ifstream read("encodertest1.erl", std::ios::binary);
     unsigned long n;
     read.read(reinterpret_cast<char*>(&n), 1);
@@ -83,8 +93,13 @@ TEST_CASE("encoder word test 3", "[encoder]") {
 
     std::ofstream clear("encodertest1.erl", std::ios::out | std::ios::trunc);
     clear.close();
-    enc.printWord(testcode1, "encodertest1.erl");
-    enc.printWord(testflush, "encodertest1.erl");
+
+    enc.setOutputFile("encodertest1.erl");
+
+    enc.printWord(testcode1);
+    enc.printWord(testflush);
+    enc.closeOutputFile();
+
     std::ifstream read("encodertest1.erl", std::ios::binary);
     unsigned long n;
     read.read(reinterpret_cast<char*>(&n), 1);
@@ -115,8 +130,13 @@ TEST_CASE("encoder word test 4", "[encoder]") {
 
     std::ofstream clear("encodertest1.erl", std::ios::out | std::ios::trunc);
     clear.close();
-    enc.printWord(testcode1, "encodertest1.erl");
-    enc.printWord(testflush, "encodertest1.erl");
+
+    enc.setOutputFile("encodertest1.erl");
+
+    enc.printWord(testcode1);
+    enc.printWord(testflush);
+    enc.closeOutputFile();
+
     std::ifstream read("encodertest1.erl", std::ios::binary);
     unsigned long n;
     read.read(reinterpret_cast<char*>(&n), 1);
@@ -147,8 +167,13 @@ TEST_CASE("encoder character test 1", "[encoder]") {
 
     std::ofstream clear("encodertest1.erl", std::ios::out | std::ios::trunc);
     clear.close();
-    enc.printCharacter(testcode1, "encodertest1.erl");
-    enc.printWord(testflush, "encodertest1.erl");
+
+    enc.setOutputFile("encodertest1.erl");
+
+    enc.printCharacter(testcode1);
+    enc.printWord(testflush);
+    enc.closeOutputFile();
+
     std::ifstream read("encodertest1.erl", std::ios::binary);
     unsigned long n;
     read.read(reinterpret_cast<char*>(&n), 1);
@@ -173,8 +198,13 @@ TEST_CASE("encoder character test 2", "[encoder]") {
 
     std::ofstream clear("encodertest1.erl", std::ios::out | std::ios::trunc);
     clear.close();
-    enc.printCharacter(testcode1, "encodertest1.erl");
-    enc.printWord(testflush, "encodertest1.erl");
+
+    enc.setOutputFile("encodertest1.erl");
+
+    enc.printCharacter(testcode1);
+    enc.printWord(testflush);
+    enc.closeOutputFile();
+
     std::ifstream read("encodertest1.erl", std::ios::binary);
     unsigned long n;
     read.read(reinterpret_cast<char*>(&n), 1);
@@ -199,8 +229,13 @@ TEST_CASE("encoder character test 3", "[encoder]") {
 
     std::ofstream clear("encodertest1.erl", std::ios::out | std::ios::trunc);
     clear.close();
-    enc.printCharacter(testcode1, "encodertest1.erl");
-    enc.printWord(testflush, "encodertest1.erl");
+
+    enc.setOutputFile("encodertest1.erl");
+
+    enc.printCharacter(testcode1);
+    enc.printWord(testflush);
+    enc.closeOutputFile();
+
     std::ifstream read("encodertest1.erl", std::ios::binary);
     unsigned long n;
     read.read(reinterpret_cast<char*>(&n), 1);
@@ -225,8 +260,13 @@ TEST_CASE("encoder character test 4", "[encoder]") {
 
     std::ofstream clear("encodertest1.erl", std::ios::out | std::ios::trunc);
     clear.close();
-    enc.printCharacter(testcode1, "encodertest1.erl");
-    enc.printWord(testflush, "encodertest1.erl");
+
+    enc.setOutputFile("encodertest1.erl");
+
+    enc.printCharacter(testcode1);
+    enc.printWord(testflush);
+    enc.closeOutputFile();
+
     std::ifstream read("encodertest1.erl", std::ios::binary);
     unsigned long n;
     read.read(reinterpret_cast<char*>(&n), 1);
@@ -256,15 +296,20 @@ TEST_CASE("mixed extensive test", "[encoder]") {
 
     std::ofstream clear("encodertestmixed.erl", std::ios::out | std::ios::trunc);
     clear.close();
-    enc.printWord(testword1, "encodertestmixed.erl");
-    enc.printCharacter(testchar1, "encodertestmixed.erl");
-    enc.printWord(testword2, "encodertestmixed.erl");
-    enc.printCharacter(testchar2, "encodertestmixed.erl");
-    enc.printWord(testword3, "encodertestmixed.erl");
-    enc.printCharacter(testchar3, "encodertestmixed.erl");
-    enc.printWord(testword4, "encodertestmixed.erl");
-    enc.printCharacter(testchar4, "encodertestmixed.erl");
-    enc.printWord(testflush, "encodertestmixed.erl");
+
+    enc.setOutputFile("encodertestmixed.erl");
+
+    enc.printWord(testword1);
+    enc.printCharacter(testchar1);
+    enc.printWord(testword2);
+    enc.printCharacter(testchar2);
+    enc.printWord(testword3);
+    enc.printCharacter(testchar3);
+    enc.printWord(testword4);
+    enc.printCharacter(testchar4);
+    enc.printWord(testflush);
+    enc.closeOutputFile();
+
     std::ifstream read("encodertestmixed.erl", std::ios::binary);
     unsigned long n;
 

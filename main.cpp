@@ -104,7 +104,7 @@ int demoEncode(int argc, char *argv[])
             if(erl.wb.contains_word(word.at(i)))
             {
                 wordCode = erl.wb.word_to_code(word.at(i));
-                if( ! erl.enc.printWord(wordCode,outfileName) ) std::cout<<"Failed at word : "<<word.at(i)<<"\n";
+                if( ! erl.enc.printWord(wordCode) ) std::cout<<"Failed at word : "<<word.at(i)<<"\n";
             }
             else
             {
@@ -115,21 +115,21 @@ int demoEncode(int argc, char *argv[])
                     {
                         charCode = erl.wb.char_to_code(word.at(i).substr(j, 2));    // Assign single character code for 2 characters
                         j++;                                                        // Additional increment to j
-                        if (!erl.enc.printCharacter(charCode, outfileName)) std::cout << "Failed at char : " << word.at(i).substr(j-1, 2) << "\n";  // Use enc to print character code
+                        if (!erl.enc.printCharacter(charCode)) std::cout << "Failed at char : " << word.at(i).substr(j-1, 2) << "\n";  // Use enc to print character code
                     }
                     else
                     {
                         charCode = erl.wb.char_to_code(word.at(i).substr(j, 1));    // Standard 6-bit code assignment for a single character in input .txt
-                        if (!erl.enc.printCharacter(charCode, outfileName)) std::cout << "Failed at char : " << word.at(i).substr(j, 1) << "\n";    // Use enc to print character code
+                        if (!erl.enc.printCharacter(charCode)) std::cout << "Failed at char : " << word.at(i).substr(j, 1) << "\n";    // Use enc to print character code
                     }
                 }
-                if(!erl.enc.printCharacter(erl.wb.char_to_code(" "),outfileName)) std::cout<<"Failed adding *\n";
+                if(!erl.enc.printCharacter(erl.wb.char_to_code(" "))) std::cout<<"Failed adding *\n";
             }
         }
     }
 
     bit_code_13_ flush = 0;
-    erl.enc.printWord(flush, outfileName);
+    erl.enc.printWord(flush);
 
     erl.enc.closeOutputFile();
 

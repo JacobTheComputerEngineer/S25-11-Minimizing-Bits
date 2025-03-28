@@ -1,13 +1,13 @@
 #include "encoder.h"
 
-bool encoder_::printWord(bit_code_13_ code, std::string filename)
+bool encoder_::printWord(bit_code_13_ code)
 {
 	buffer.reset(index);	// Prepending the '0' tag bit
 	index--;				// Shift the index for the buffer right one
 	if (index == -1)		// If end of buffer is reached
 	{
 		index = 7;			// Reset index
-		if (!(appendToFile(filename)))	// Append "full" buffer to output .erl file
+		if (!(appendToFile()))	// Append "full" buffer to output .erl file
 		{
 			return false;
 		}
@@ -21,7 +21,7 @@ bool encoder_::printWord(bit_code_13_ code, std::string filename)
 			if (index == -1)		// If end of buffer is reached
 			{
 				index = 7;			// Reset index
-				if (!(appendToFile(filename)))	// Append "full" buffer to output .erl file
+				if (!(appendToFile()))	// Append "full" buffer to output .erl file
 				{
 					return false;
 				}
@@ -34,7 +34,7 @@ bool encoder_::printWord(bit_code_13_ code, std::string filename)
 			if (index == -1)		// If end of buffer is reached
 			{
 				index = 7;			// Reset index
-				if (!(appendToFile(filename)))	// Append "full" buffer to output .erl file
+				if (!(appendToFile()))	// Append "full" buffer to output .erl file
 				{
 					return false;
 				}
@@ -44,14 +44,14 @@ bool encoder_::printWord(bit_code_13_ code, std::string filename)
 	return true;
 }
 
-bool encoder_::printCharacter(bit_code_6_ code, std::string filename)
+bool encoder_::printCharacter(bit_code_6_ code)
 {
 	buffer.set(index);		// Prepending the '1' tag bit
 	index--;				// Shift the index for the buffer right one
 	if (index == -1)		// If end of buffer is reached
 	{
 		index = 7;			// Reset index
-		if (!(appendToFile(filename)))	// Append "full" buffer to output .erl file
+		if (!(appendToFile()))	// Append "full" buffer to output .erl file
 		{
 			return false;
 		}
@@ -65,7 +65,7 @@ bool encoder_::printCharacter(bit_code_6_ code, std::string filename)
 			if (index == -1)		// If end of buffer is reached
 			{
 				index = 7;			// Reset index
-				if (!(appendToFile(filename)))	// Append "full" buffer to output .erl file
+				if (!(appendToFile()))	// Append "full" buffer to output .erl file
 				{
 					return false;
 				}
@@ -78,7 +78,7 @@ bool encoder_::printCharacter(bit_code_6_ code, std::string filename)
 			if (index == -1)		// If end of buffer is reached
 			{
 				index = 7;			// Reset index
-				if (!(appendToFile(filename)))	// Append "full" buffer to output .erl file
+				if (!(appendToFile()))	// Append "full" buffer to output .erl file
 				{
 					return false;
 				}
@@ -88,7 +88,7 @@ bool encoder_::printCharacter(bit_code_6_ code, std::string filename)
 	return true;
 }
 
-bool encoder_::appendToFile(std::string filename)
+bool encoder_::appendToFile()
 {
 	if (write.is_open())									// If file was properly opened
 	{

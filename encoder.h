@@ -16,10 +16,9 @@ class encoder_
 
 public:
 
-	/// TODO: Remove filename param from these three functions??
-	bool printWord(bit_code_13_ code, std::string filename);		// Function to print codes for common words, given as a 13-bit std::bitset
-	bool printCharacter(bit_code_6_ code, std::string filename);	// Function to print codes for individual characters, given as a 6-bit std::bitset
-	bool appendToFile(std::string filename);						// Function to append "full" buffer to binary output .erl file
+	bool printWord(bit_code_13_ code);		// Function to print codes for common words, given as a 13-bit std::bitset
+	bool printCharacter(bit_code_6_ code);	// Function to print codes for individual characters, given as a 6-bit std::bitset
+	bool appendToFile();						// Function to append "full" buffer to binary output .erl file
 
 	void setOutputFile(std::string filename);
 	void closeOutputFile();

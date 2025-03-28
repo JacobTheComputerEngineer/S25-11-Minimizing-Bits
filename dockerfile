@@ -14,7 +14,7 @@ RUN apt-get -y install python3-pip python3-dev
 RUN apt-get -y install valgrind lcov doxygen
 RUN apt-get -y install clang clang-tidy
 RUN apt-get -y install dos2unix
-RUN apt-get -y install libicu-dev pkg-config
+#RUN apt-get -y install libicu-dev pkg-config
 
 RUN pip3 install gcovr pexpect
 

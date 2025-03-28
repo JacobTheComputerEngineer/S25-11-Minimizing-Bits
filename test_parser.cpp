@@ -8,10 +8,10 @@ TEST_CASE("Test file validation and if empty", "[parser]") {
     parser_ par;
 
     // Example test case
-    std::string testfile = "testparser.txt";
-    //check if testparser is a valid file
+    std::string testfile = "preprocessorTestFile.txt";
+    //check if input is a valid file
     REQUIRE(par.isValidFile(testfile) == true);
-    //check if testparser is empty
+    //check if input is empty
     REQUIRE(par.isFileEmpty(testfile) == false);
 
 }
@@ -29,13 +29,13 @@ TEST_CASE("Test file creation", "[parser]") {
 
 TEST_CASE("Test argument parsing", "[parser]") {
     parser_ par;
-    std::string messageFile = "testparser.txt";
-    std::string dictionaryFile = "tempdictionary.txt";
+    std::string messageFile = "preprocessorTestFile.txt";
+    std::string dictionaryFile = "defaultdictionary.txt";
     std::string outputFile = "output.erl";
     //check if the arguments are parsed correctly
-    char* validArgs[] = { (char*)"program", (char*)"testparser.txt", (char*)"tempdictionary.txt", (char*)"output.erl" };
+    char* validArgs[] = { (char*)"program", (char*)"preprocessorTestFile.txt", (char*)"defaultdictionary.txt", (char*)"output.erl" };
     REQUIRE(par.parseArguments(4, validArgs, messageFile, dictionaryFile) == true);
-    REQUIRE(messageFile == "testparser.txt");
-    REQUIRE(dictionaryFile == "tempdictionary.txt");
+    REQUIRE(messageFile == "preprocessorTestFile.txt");
+    REQUIRE(dictionaryFile == "defaultdictionary.txt");
 }
 

@@ -10,7 +10,7 @@ TEST_CASE("example wordbank test", "[wordbank]") {
 
 TEST_CASE("test wordbank construct", "[wordbank]") {
     wordbank_ wb;
-    wb.construct("tempdictionary.txt");
+    wb.construct("defaultdictionary.txt");
 
     REQUIRE(wb.contains_word("the"));
     REQUIRE(wb.contains_word("and"));
@@ -26,7 +26,7 @@ TEST_CASE("test wordbank construct", "[wordbank]") {
 
 TEST_CASE("test wordbank no 1 or 2 letter words", "[wordbank]") {
     wordbank_ wb;
-    wb.construct("tempdictionary.txt");
+    wb.construct("defaultdictionary.txt");
 
     REQUIRE_FALSE(wb.contains_word("i"));
     REQUIRE_FALSE(wb.contains_word("a"));
@@ -42,7 +42,7 @@ TEST_CASE("test wordbank no 1 or 2 letter words", "[wordbank]") {
 
 TEST_CASE("convert word to code", "[wordbank]") {
     wordbank_ wb;
-    wb.construct("tempdictionary.txt");
+    wb.construct("defaultdictionary.txt");
 
     REQUIRE(wb.word_to_code("the") == bit_code_13_(0));
     REQUIRE(wb.word_to_code("and") == bit_code_13_(1));
@@ -58,7 +58,7 @@ TEST_CASE("convert word to code", "[wordbank]") {
 
 TEST_CASE("convert code to word", "[wordbank]") {
     wordbank_ wb;
-    wb.construct("tempdictionary.txt");
+    wb.construct("defaultdictionary.txt");
 
     REQUIRE(wb.code_to_word(bit_code_13_(0)) == "the");
     REQUIRE(wb.code_to_word(bit_code_13_(1)) == "and");
@@ -76,7 +76,7 @@ TEST_CASE("convert code to word", "[wordbank]") {
 
 TEST_CASE("convert char to code", "[wordbank]") {
     wordbank_ wb;
-    wb.construct("tempdictionary.txt");
+    wb.construct("defaultdictionary.txt");
 
     REQUIRE(wb.char_to_code("a") == bit_code_6_(0));
     REQUIRE(wb.char_to_code("b") == bit_code_6_(1));
@@ -87,7 +87,7 @@ TEST_CASE("convert char to code", "[wordbank]") {
 
 TEST_CASE("convert code to char", "[wordbank]") {
     wordbank_ wb;
-    wb.construct("tempdictionary.txt");
+    wb.construct("defaultdictionary.txt");
 
     REQUIRE(wb.code_to_char(bit_code_6_(0)) == "a");
     REQUIRE(wb.code_to_char(bit_code_6_(1)) == "b");

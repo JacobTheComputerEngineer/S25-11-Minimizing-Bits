@@ -88,6 +88,7 @@ int demoEncode(int argc, char *argv[])
     std::ifstream input(messageFileName);
     erl.wb.construct(dictName);
     erl.pre.setUp(messageFileName, erl.wb.getExistingChars(), erl.wb.getPunctuationChars());
+    erl.enc.setOutputFile(outfileName);
 
     bit_code_13_ wordCode;
     bit_code_6_ charCode;
@@ -129,6 +130,8 @@ int demoEncode(int argc, char *argv[])
 
     bit_code_13_ flush = 0;
     erl.enc.printWord(flush, outfileName);
+
+    erl.enc.closeOutputFile();
 
     std::cout<<"Size of original: "<<getFileSize(messageFileName)<<"\n";
     std::cout<<"Size of erl: "<<getFileSize(outfileName)<<"\n";

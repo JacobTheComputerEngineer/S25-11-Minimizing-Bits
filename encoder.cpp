@@ -90,16 +90,23 @@ bool encoder_::printCharacter(bit_code_6_ code, std::string filename)
 
 bool encoder_::appendToFile(std::string filename)
 {
-	std::ofstream write(filename, std::ios::app | std::ios::binary);		// Open output stream to indicated binary file
 	if (write.is_open())									// If file was properly opened
 	{
 		unsigned long n = buffer.to_ulong();				// Convert buffer contents to long
 		write.write(reinterpret_cast<const char*>(&n), 1);	// Append encoding by appending the binary of the character represented by the contents of buffer
-		write.close();										// Close the file
+		//write.close();										// Close the file
 	}
 	else
 	{
 		return false;										// Return false if malfunction, e.g. file couldn't be created/found
 	}
 	return true;
+}
+
+void encoder_::setOutputFile(std::string filename) {
+	write = std::ofstream(filename, std::ios::app | std::ios::binary);		// Open output stream to indicated binary file
+}
+
+void encoder_::closeOutputFile() {
+	write.close();
 }

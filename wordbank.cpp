@@ -31,12 +31,12 @@ bool wordbank_::contains_char(const std::string& c) const {     // MV 3/25/25 - 
 
 // TODO: Adjust these as needed
 std::string wordbank_::getExistingChars() {
-    return "abcdefghijklmnopqrstuvwxyz0123456789.,?!-+=/:;()\'\"~@#$%&*";
+    return "abcdefghijklmnopqrstuvwxyz0123456789.,?!-+=/:;()\'\"~@#$%&*[]";
 }
 
 // TODO: Adjust these as needed
 std::string wordbank_::getPunctuationChars() {
-    return ".,?!-+=/:;()\'\"~@#$%&*";
+    return ".,?!-+=/:;()\'\"~@#$%&*[]";
 }
 
 void wordbank_::build_word_map(const std::string& filename) {
@@ -54,8 +54,11 @@ void wordbank_::build_word_map(const std::string& filename) {
         i++;
     }
 
-    /// TODO: Assert size == 8192
-    // std::cout << "Final wb size = " << i << std::endl;
+    // Assert size == 8192
+    if (i != 8192) {
+        std::cerr << "WARNING: The word bank was constructed to size " << i << "not 8192." << std::endl;
+    }
+    // std::cout << "Final word wb size = " << forward_word_map.size() << std::endl;
 }
 
 void wordbank_::build_char_map() {
@@ -65,7 +68,7 @@ void wordbank_::build_char_map() {
         "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
         ".", ",", "?", "!", "-", "+", "=", "/", ":", ";", "(", ")", "\'",
         "\"", "~", "@", "#", "$", "%", "&", "*", 
-        "sh", "ch", "th", "ck", "ie", "ea", " "
+        " ", "sh", "ch", "th", "ck", "[", "]"
     };
 
     for (std::size_t i = 0; i < char_list.size(); ++i) {
@@ -73,6 +76,6 @@ void wordbank_::build_char_map() {
         reverse_char_map[bit_code_6_(i)] = char_list[i];
     }
 
-    // TODO: Assert size == 64
+    // Assert size == 64
     // std::cout << "Final char wb size = " << forward_char_map.size() << std::endl;
 }

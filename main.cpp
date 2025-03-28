@@ -90,6 +90,10 @@ int demoEncode(int argc, char *argv[])
     erl.pre.setUp(messageFileName, erl.wb.getExistingChars(), erl.wb.getPunctuationChars());
     erl.enc.setOutputFile(outfileName);
 
+    // Keep track of stats
+    uint32_t num_hits = 0;
+    uint32_t num_misses = 0;
+
     bit_code_13_ wordCode;
     bit_code_6_ charCode;
     while(erl.pre.fileGood())
@@ -103,11 +107,13 @@ int demoEncode(int argc, char *argv[])
         {
             if(erl.wb.contains_word(word.at(i)))
             {
+                num_hits++;
                 wordCode = erl.wb.word_to_code(word.at(i));
                 if( ! erl.enc.printWord(wordCode) ) std::cout<<"Failed at word : "<<word.at(i)<<"\n";
             }
             else
             {
+                num_misses++;
                 // std::cout << "Printing by char\n";
                 for(int j=0;j<word.at(i).size();j++)
                 {
@@ -133,8 +139,16 @@ int demoEncode(int argc, char *argv[])
 
     erl.enc.closeOutputFile();
 
-    std::cout<<"Size of original: "<<getFileSize(messageFileName)<<"\n";
-    std::cout<<"Size of erl: "<<getFileSize(outfileName)<<"\n";
+    // Compute final stats
+    double hit_rate = (double)(num_hits) / (double)(num_hits + num_misses);
+    uint32_t original_size = (uint32_t)getFileSize(messageFileName);
+    uint32_t erl_size = (uint32_t)getFileSize(outfileName);
+    double savings_percent = 1.0 - (double)(erl_size) / (double)(original_size);
+
+    std::cout << "Size of original: " << getFileSize(messageFileName) << "\n";
+    std::cout << "Size of erl: " << getFileSize(outfileName) << "\n";
+    std::cout << "Size Reduction: " << savings_percent * 100.0 << "%\n";
+    std::cout << "Hit Rate: " << hit_rate * 100.0 << "%\n";
 
     return 0;
 }

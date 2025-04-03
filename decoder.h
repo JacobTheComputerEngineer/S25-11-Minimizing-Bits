@@ -16,5 +16,4 @@ public:
     bool readWordBits(std::ifstream &file, std::bitset<13> &bits);
     bool readCharBits(std::ifstream &file, std::bitset<6> &bits);
 };
-//bool hasExtension(const std::string& filename, const std::string& extension); //function may come back
 #endif // DECODER_H

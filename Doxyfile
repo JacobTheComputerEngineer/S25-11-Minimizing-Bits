@@ -1,0 +1,16 @@
+OUTPUT_DIRECTORY        = docs
+GENERATE_HTML           = YES
+GENERATE_LATEX          = NO
+INPUT                   = /mnt
+RECURSIVE               = NO
+FILE_PATTERNS           = *.cpp *.h *.md
+EXCLUDE_PATTERNS        = */test_*.cpp
+EXTRACT_ALL             = YES
+EXTRACT_PRIVATE         = YES
+EXTRACT_STATIC          = YES
+EXTRACT_LOCAL_CLASSES   = YES
+EXTRACT_ANON_NSPACES    = YES
+PROJECT_NAME            = "S25-11 Minimizing Bits for Communication"
+MARKDOWN_SUPPORT        = YES
+INPUT                   = /mnt /mnt/README.md
+USE_MDFILE_AS_MAINPAGE  = /mnt/README.md

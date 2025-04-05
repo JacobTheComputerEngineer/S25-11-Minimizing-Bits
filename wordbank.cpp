@@ -29,12 +29,12 @@ bool wordbank_::contains_char(const std::string& c) const {     // MV 3/25/25 - 
     return forward_char_map.find(c) != forward_char_map.end();
 }
 
-// TODO: Adjust these as needed
+// Adjust these as needed
 std::string wordbank_::getExistingChars() {
     return "abcdefghijklmnopqrstuvwxyz0123456789.,?!-+=/:;()\'\"~@#$%&*[]";
 }
 
-// TODO: Adjust these as needed
+// Adjust these as needed
 std::string wordbank_::getPunctuationChars() {
     return ".,?!-+=/:;()\'\"~@#$%&*[]";
 }

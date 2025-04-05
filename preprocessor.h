@@ -23,32 +23,111 @@ class preprocessor_
 
         // Multiple methods of setting up the preprocessor
         // Could be just setUp
-        bool setUp(std::string fileString, std::string existingChars, std::string puncChars);
-            // preprocessor initialization functions
-            bool setFile(std::string fileString);
-            void setExistingChars(std::string existingChars);
-            void setPuncChars(std::string puncChars);
 
+        /**
+         * @brief Sets up the preprocessor object
+         * @param fileString the input filename
+         * @param existingChars the set of characters existing in the word bank
+         * @param puncChars the set of punctuation marks existing in the word bank
+         * @return true if successful
+         */
+        bool setUp(std::string fileString, std::string existingChars, std::string puncChars);
+
+        // preprocessor initialization functions
+
+        /**
+         * @brief Sets the input file for the preprocessor
+         * @param fileString the input filename
+         * @return true if successful
+         */
+        bool setFile(std::string fileString);
+
+        /**
+         * @brief Sets the existing character set for the preprocessor
+         * @param existingChars the set of existing characters
+         * @return true if successful
+         */
+        void setExistingChars(std::string existingChars);
+
+        /**
+         * @brief Sets the punctuation mark set for the preprocessor
+         * @param existingChars the set of punctuation marks
+         * @return true if successful
+         */
+        void setPuncChars(std::string puncChars);
+
+        /**
+         * @brief Reads a line from the input file
+         * @return the line as a std::string
+         */
         std::string readLine();
 
+        /**
+         * @brief Converts a given word following the definitions of the preprocessor
+         * @param word the word to convert
+         * @return a vector of strings to contain any substrings identified as words or punctuation marks
+         */
         std::vector<std::string> convertWord(std::string word);
 
+        /**
+         * @brief Returns true if the input file is still good
+         * @return true if file is good
+         */
         bool fileGood();
 
     private:
 
         // Data members
+        /**
+         * @brief Input file stream object
+         */
         std::ifstream iFile;
+
+        /**
+         * @brief Set of existing characters
+         */
         std::string existingChars;
+
+        /**
+         * @brief Set of punctuation characters
+         */
         std::string puncuationChars;
         
         // preprocessor operating functions
+        /**
+         * @brief Converts a given word to lowercase
+         * @param word the word to convert
+         * @return word in lowercase
+         */
         std::string lowercase(std::string word);
+
+        /**
+         * @brief Separates embedded punctuation marks into a vector of strings
+         * @param word the word to convert
+         * @return a vector of strings that places punctuation marks in separate strings
+         */
         std::vector<std::string> separate(std::string word);
+
+        /**
+         * @brief Replaces any unrecognized characters with an unknown symbol (?)
+         * @param outWord the words to convert
+         * @return the output vector with any unknown characters removed
+         */
         std::vector<std::string> removeNonexisting(std::vector<std::string> outWord);
 
         // helper functions
+        /**
+         * @brief Returns true if the letter is a punctuation mark
+         * @param letter the letter to check
+         * @return true if letter is a punctuation mark
+         */
         bool isPunc(char letter);
+
+        /**
+         * @brief Returns true if the letter is a valid character
+         * @param letter the letter to check
+         * @return true if letter is a valid character
+         */
         bool isChar(char letter);
 };
 

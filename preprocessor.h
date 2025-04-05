@@ -2,6 +2,7 @@
 #define PREPROCESSOR_H
 
 #include <fstream>
+#include <sstream>
 #include <string>
 #include <vector>
 #include <iostream>
@@ -18,7 +19,7 @@ class preprocessor_
             void setExistingChars(std::string existingChars);
             void setPuncChars(std::string puncChars);
 
-        std::string readWord();
+        std::string readLine();
 
         std::vector<std::string> convertWord(std::string word);
 

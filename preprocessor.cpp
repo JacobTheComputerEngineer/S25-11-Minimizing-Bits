@@ -26,10 +26,11 @@ void preprocessor_::setPuncChars(std::string puncChars)
     return;
 }
 
-std::string preprocessor_::readWord()
+std::string preprocessor_::readLine()
 {
     std::string word;
-    iFile>>word;
+    // iFile>>word;
+    std::getline(iFile, word);
     return word;
 }
 

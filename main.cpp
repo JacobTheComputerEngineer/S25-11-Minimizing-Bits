@@ -96,42 +96,53 @@ int demoEncode(int argc, char *argv[])
 
     bit_code_13_ wordCode;
     bit_code_6_ charCode;
-    while(erl.pre.fileGood())
+    while(erl.pre.fileGood())  // Keep reading lines until file is done
     {
-        std::vector<std::string> word;
-        word.push_back(erl.pre.readWord());
-        if(word.at(0).size() == 0) break;
-        word = erl.pre.convertWord(word[0]);
+        std::string line = erl.pre.readLine();
+        std::istringstream line_stream(line);
 
-        for(int i=0;i<word.size();i++)
-        {
-            if(erl.wb.contains_word(word.at(i)))
+        std::string raw_word;
+        while (line_stream >> raw_word) {  // Keep reading words until line is done
+            // Do everything below here for each word in the line
+            std::vector<std::string> word;
+            word.push_back(raw_word);
+            if(word.at(0).size() == 0) break;
+            word = erl.pre.convertWord(word[0]);
+
+            for(int i=0;i<word.size();i++)
             {
-                num_hits++;
-                wordCode = erl.wb.word_to_code(word.at(i));
-                if( ! erl.enc.printWord(wordCode) ) std::cout<<"Failed at word : "<<word.at(i)<<"\n";
-            }
-            else
-            {
-                num_misses++;
-                // std::cout << "Printing by char\n";
-                for(int j=0;j<word.at(i).size();j++)
+                if(erl.wb.contains_word(word.at(i)))
                 {
-                    if (erl.wb.contains_char(word.at(i).substr(j, 2)))      // Check for digraphs to assign a single 6-bit character code to 2 adjacent letters
-                    {
-                        charCode = erl.wb.char_to_code(word.at(i).substr(j, 2));    // Assign single character code for 2 characters
-                        j++;                                                        // Additional increment to j
-                        if (!erl.enc.printCharacter(charCode)) std::cout << "Failed at char : " << word.at(i).substr(j-1, 2) << "\n";  // Use enc to print character code
-                    }
-                    else
-                    {
-                        charCode = erl.wb.char_to_code(word.at(i).substr(j, 1));    // Standard 6-bit code assignment for a single character in input .txt
-                        if (!erl.enc.printCharacter(charCode)) std::cout << "Failed at char : " << word.at(i).substr(j, 1) << "\n";    // Use enc to print character code
-                    }
+                    num_hits++;
+                    wordCode = erl.wb.word_to_code(word.at(i));
+                    if( ! erl.enc.printWord(wordCode) ) std::cout<<"Failed at word : "<<word.at(i)<<"\n";
                 }
-                if(!erl.enc.printCharacter(erl.wb.char_to_code(" "))) std::cout<<"Failed adding *\n";
+                else
+                {
+                    num_misses++;
+                    // std::cout << "Printing by char\n";
+                    for(int j=0;j<word.at(i).size();j++)
+                    {
+                        if (erl.wb.contains_char(word.at(i).substr(j, 2)))      // Check for digraphs to assign a single 6-bit character code to 2 adjacent letters
+                        {
+                            charCode = erl.wb.char_to_code(word.at(i).substr(j, 2));    // Assign single character code for 2 characters
+                            j++;                                                        // Additional increment to j
+                            if (!erl.enc.printCharacter(charCode)) std::cout << "Failed at char : " << word.at(i).substr(j-1, 2) << "\n";  // Use enc to print character code
+                        }
+                        else
+                        {
+                            charCode = erl.wb.char_to_code(word.at(i).substr(j, 1));    // Standard 6-bit code assignment for a single character in input .txt
+                            if (!erl.enc.printCharacter(charCode)) std::cout << "Failed at char : " << word.at(i).substr(j, 1) << "\n";    // Use enc to print character code
+                        }
+                    }
+                    if(!erl.enc.printCharacter(erl.wb.char_to_code(" "))) std::cout<<"Failed adding *\n";
+                }
             }
+            // Do everything above for every word in the line
         }
+
+        // Now, insert a newline
+        erl.enc.printCharacter(erl.wb.char_to_code("\n"));
     }
 
     bit_code_13_ flush = 0;

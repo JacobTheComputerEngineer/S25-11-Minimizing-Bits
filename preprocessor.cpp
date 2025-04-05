@@ -29,7 +29,6 @@ void preprocessor_::setPuncChars(std::string puncChars)
 std::string preprocessor_::readLine()
 {
     std::string word;
-    // iFile>>word;
     std::getline(iFile, word);
     return word;
 }

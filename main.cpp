@@ -1,74 +1,66 @@
 #include "decoder.h"
 #include "encoder.h"
 #include "parser.h"
-#include "preprocessor.h" // contains linux only header files
+#include "preprocessor.h"
 #include "wordbank.h"
 
 #include <string>
 #include <iostream>
 #include <fstream>
 
-// TODO
-// Digraphs
-// maybe newlines
-
-//function solely for checking file extension
+/**
+ * @brief Check if the filename has the given extension
+ * @param filename the filename to check
+ * @param extension the desired file extension
+ * @return true filename has the desired extension
+ */
 bool hasExtension(const std::string& filename, const std::string& extension) {
     return filename.size() >= extension.size() &&
            filename.compare(filename.size() - extension.size(), extension.size(), extension) == 0;
 }
 
+/**
+ * @brief Container class for all submodules.
+ *
+ * @details
+ * The `ERL` class acts as a central container or manager for the key components
+ * involved in the system, including the parser, preprocessor, encoder, decoder,
+ * and word bank. This design promotes modularity and simplifies interaction
+ * between the submodules.
+ *
+ * Each public member corresponds to a core module in the data processing pipeline:
+ * - `parser_ par` handles input parsing.
+ * - `preprocessor_ pre` performs data preprocessing tasks.
+ * - `encoder_ enc` manages encoding logic.
+ * - `decoder_ dec` is responsible for decoding operations.
+ * - `wordbank_ wb` stores and retrieves word data.
+ *
+ * The class currently does not encapsulate behavior (i.e., no methods),
+ * but it serves as a structural and logical grouping of submodules.
+ *
+ */
 class ERL
 {
     public:
         parser_ par;
-        // TO DO : 
-
-
 
         preprocessor_ pre;
-        // TO DO : 
-        //  complete punctuation separation list
-        //  add logic to character exists
-        //  implement character exists
-
 
         encoder_ enc;
-        // TO DO : 
-
-
 
         decoder_ dec;
-        // TO DO : 
-
-
         
         wordbank_ wb;
-        // TO DO : 
-
-
-
-
-        //functions connecting modules here
-        //module specific functions in each module
-
-        // suggested functions and connections
-        //  void loadFiles (parser, wb, pre)
-        //      input file from the given from the parser updates the file value of wb and pre
-        //  void loadCharsets (wb, pre)
-        //      upload the character bank (full and punctuation) to the preprocessor
-        //  void encode  (pre, enc)
-        //      a loop that receives a word from pre and gives it to enc
-        //  bool checkCommon (enc, wb)
-        //      enc gives a word to wb, wb returns if common
 
     private:
 
 };
 
-// bbedit
-// print out file size
-
+/**
+ * @brief Returns the file size of a file in bytes
+ * @param filename the filename to check
+ * @return The size of the file in bytes
+ */
 std::streampos getFileSize(const std::string& fileName) {
     std::ifstream file(fileName, std::ios::binary | std::ios::ate);  // Open file in binary mode, and move the read pointer to the end
     if (!file.is_open()) {
@@ -78,6 +70,10 @@ std::streampos getFileSize(const std::string& fileName) {
     return file.tellg();  // tellg() returns the current position of the read pointer, which is at the end of the file
 }
 
+/**
+ * @brief Performs the encoder algorithm on a given input file
+ *        Expected usage: ./erl <MESSAGE .txt> <DICTIONARY .txt> <OUTPUT .erl>
+ */
 int demoEncode(int argc, char *argv[])
 {
     std::string outfileName, messageFileName, dictName;
@@ -164,6 +160,10 @@ int demoEncode(int argc, char *argv[])
     return 0;
 }
 
+/**
+ * @brief Performs the decoder algorithm on a given input file
+ *        Expected usage: ./erl <BINARY .erl> <DICTIONARY .txt> <OUTPUT .txt>
+ */
 int demoDecode(int argc, char *argv[])
 {
     std::string outfileName, messageFileName, dictName;
@@ -185,7 +185,7 @@ int demoDecode(int argc, char *argv[])
         {
             erl.dec.readCharBits(input, charCode);
             word = erl.wb.code_to_char(charCode);
-            if (!input.eof())                       // MV 3/25/25 - Resolved an issue where decoder was printing flush word to output .txt; must ignore final word code printed to erl
+            if (!input.eof()) // Resolved an issue where decoder was printing flush word to output .txt; must ignore final word code printed to erl
             {
                 output << word;
             }
@@ -207,54 +207,13 @@ int demoDecode(int argc, char *argv[])
     return 0;
 }
 
+/**
+ * @brief Entry point for the system. The file extension of the input file (.txt or .erl) will automatically
+ *        run either the encoder or decoder respectively.
+ *        Expected usage: ./erl <INPUT> <DICTIONARY> <OUTPUT>
+ */
 int main(int argc, char *argv[])
 {
-//     ERL erl;
-
-//     std::cout << "Running ERL correctly..." << std::endl;
-
-
-
-// //decoder function, saving in main sothat decoder.cpp is complete
-//     decoder_ decoder;
-//     wordbank_ wb;
-//     std::string inputFilename = "DecoderBtest.erl";
-//     std::string outputFilename = "DecoderTtest.txt";
-//     if (!hasExtension(inputFilename, ".erl")) {
-//         std::cerr << "Error: Input file must have a .erl extension.\n";
-//         return 1;
-//     }
-
-//     if (!hasExtension(outputFilename, ".txt")) {
-//         std::cerr << "Error: Output file must have a .txt extension.\n";
-//         return 1;
-//     }
-
-//     std::ifstream inputFile(inputFilename, std::ios::binary);
-//     std::ofstream outputFile(outputFilename);
-//     if (!inputFile.is_open() || !outputFile.is_open()) {
-//         std::cerr << "Error: Unable to open input or output file.\n";
-//         return 1;
-//     }
-//     while (!inputFile.eof()) {
-//         bool tagBit;
-//         if (!decoder.readNextBit(inputFile, tagBit)) break;
-
-//         if (tagBit) { // Character mode - 1
-//             bit_code_6_ charBits;
-//             if (!decoder.readCharBits(inputFile, 6, charBits)) break;
-//             outputFile << wb.code_to_char(charBits);
-//         } else { // Word mode - 0
-//             bit_code_13_ wordBits;
-//             if (!decoder.readWordBits(inputFile, 13, wordBits)) break;
-//             outputFile << wb.code_to_word(wordBits) << " ";
-//         }
-//     }
-//     inputFile.close();
-//     outputFile.close();
-//     std::cout << "Decoding complete. Output saved to " << outputFilename << "\n";
-//end decoder save
-
     if (argc != 4) {
         std::cerr << "Usage: " << argv[0] << " <message_file> <dictionary_file> <output_file>" << std::endl;
         return 0;

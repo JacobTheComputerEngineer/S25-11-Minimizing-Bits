@@ -7,6 +7,16 @@
 #include <vector>
 #include <iostream>
 
+/**
+ * @brief Preprocessor submodule
+ *
+ * @details
+ * The `preprocessor_` class provides methods to convert words to the proper format for encoding.
+ * The following conversions are made:
+ * - All letters are converted to lowercase
+ * - All punctuation marks are separated on both sides by spaces
+ * - Any unrecognized characters are replaced by an unknown symbol (?)
+ */
 class preprocessor_
 {
     public:

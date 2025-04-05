@@ -1,12 +1,5 @@
 #include "decoder.h"
 
-//***function moved to main for now, could come back***
-//function solely for checking file extension
-// bool hasExtension(const std::string& filename, const std::string& extension) {
-//     return filename.size() >= extension.size() &&
-//            filename.compare(filename.size() - extension.size(), extension.size(), extension) == 0;
-// }
-
 
 //function reads next bit, and by reference updates the bit in decodeFile
 //returns true if bit is read successfully 

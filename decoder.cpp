@@ -10,7 +10,9 @@ bool decoder_::readNextBit(std::ifstream &file, bool &bit)
     
     if (index == -1) {//if done with byte, grab the next byte
         char byte;
-        if (!file.read(&byte, 1)) return false; //error return false such as EOF
+        if (!file.read(&byte, 1)) { 
+            return false; //error return false such as EOF
+        }
         buffer = std::bitset<8>(static_cast<unsigned char>(byte)); //8bit representation of pulled char
         index = 7;//reset index to 7 (MSB)
     }
@@ -26,7 +28,9 @@ bool decoder_::readWordBits(std::ifstream &file, std::bitset<13> &bits)
 {
     for (int i = 13 - 1; i >= 0; i--) {//run until all 13 bits are entered
         bool bit;
-        if (!readNextBit(file, bit)) return false;
+        if (!readNextBit(file, bit)) {
+            return false;
+        }
         bits.set(i, bit);//append each bit
     }
     return true;
@@ -39,7 +43,9 @@ bool decoder_::readCharBits(std::ifstream &file, std::bitset<6> &bits)
 {
     for (int i = 6 - 1; i >= 0; i--) {//run until all 6 bits are entered
         bool bit;
-        if (!readNextBit(file, bit)) return false;
+        if (!readNextBit(file, bit)) {
+            return false;
+        }
         bits.set(i, bit);//append each bit
     }
     return true;

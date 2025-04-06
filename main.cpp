@@ -76,7 +76,9 @@ std::streampos getFileSize(const std::string& fileName) {
  */
 int demoEncode(int argc, char *argv[])
 {
-    std::string outfileName, messageFileName, dictName;
+    std::string outfileName;
+    std::string messageFileName;
+    std::string dictName;
     ERL erl;
     erl.par.parseArguments(argc, argv, messageFileName, dictName);
     outfileName = argv[3];
@@ -102,7 +104,9 @@ int demoEncode(int argc, char *argv[])
             // Do everything below here for each word in the line
             std::vector<std::string> word;
             word.push_back(raw_word);
-            if(word.at(0).size() == 0) break;
+            if(word.at(0).empty()) {
+                break;
+            } 
             word = erl.pre.convertWord(word[0]);
 
             for(int i=0;i<word.size();i++)
@@ -111,7 +115,9 @@ int demoEncode(int argc, char *argv[])
                 {
                     num_hits++;
                     wordCode = erl.wb.word_to_code(word.at(i));
-                    if( ! erl.enc.printWord(wordCode) ) std::cout<<"Failed at word : "<<word.at(i)<<"\n";
+                    if(!erl.enc.printWord(wordCode)) {
+                        std::cout<<"Failed at word : "<<word.at(i)<<"\n";
+                    }
                 }
                 else
                 {
@@ -123,15 +129,21 @@ int demoEncode(int argc, char *argv[])
                         {
                             charCode = erl.wb.char_to_code(word.at(i).substr(j, 2));    // Assign single character code for 2 characters
                             j++;                                                        // Additional increment to j
-                            if (!erl.enc.printCharacter(charCode)) std::cout << "Failed at char : " << word.at(i).substr(j-1, 2) << "\n";  // Use enc to print character code
+                            if (!erl.enc.printCharacter(charCode)) {
+                                std::cout << "Failed at char : " << word.at(i).substr(j-1, 2) << "\n";  // Use enc to print character code
+                            }
                         }
                         else
                         {
                             charCode = erl.wb.char_to_code(word.at(i).substr(j, 1));    // Standard 6-bit code assignment for a single character in input .txt
-                            if (!erl.enc.printCharacter(charCode)) std::cout << "Failed at char : " << word.at(i).substr(j, 1) << "\n";    // Use enc to print character code
+                            if (!erl.enc.printCharacter(charCode)) {
+                                std::cout << "Failed at char : " << word.at(i).substr(j, 1) << "\n";    // Use enc to print character code
+                            }
                         }
                     }
-                    if(!erl.enc.printCharacter(erl.wb.char_to_code(" "))) std::cout<<"Failed adding *\n";
+                    if(!erl.enc.printCharacter(erl.wb.char_to_code(" "))) {
+                        std::cout<<"Failed adding *\n";
+                    }
                 }
             }
             // Do everything above for every word in the line
@@ -166,7 +178,9 @@ int demoEncode(int argc, char *argv[])
  */
 int demoDecode(int argc, char *argv[])
 {
-    std::string outfileName, messageFileName, dictName;
+    std::string outfileName;
+    std::string messageFileName;
+    std::string dictName;
     ERL erl;
     erl.par.parseArguments(argc, argv, messageFileName, dictName);
     outfileName = argv[3];
@@ -220,8 +234,14 @@ int main(int argc, char *argv[])
     }
 
     std::string input(argv[1]);
-         if (input.find(".txt") != std::string::npos ) demoEncode(argc, argv);
-    else if (input.find(".erl") != std::string::npos ) demoDecode(argc, argv);
-    else std::cerr << "message_file must be of type .txt or .erl\n";
+    if (input.find(".txt") != std::string::npos) {
+        demoEncode(argc, argv);
+    } 
+    else if (input.find(".erl") != std::string::npos) {
+        demoDecode(argc, argv);
+    } 
+    else {
+        std::cerr << "message_file must be of type .txt or .erl\n";
+    }
     return 0;
 }

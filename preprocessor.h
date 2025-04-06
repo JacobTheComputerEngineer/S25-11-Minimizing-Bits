@@ -27,11 +27,11 @@ class preprocessor_
         /**
          * @brief Sets up the preprocessor object
          * @param fileString the input filename
-         * @param existingChars the set of characters existing in the word bank
+         * @param eChars the set of characters existing in the word bank
          * @param puncChars the set of punctuation marks existing in the word bank
          * @return true if successful
          */
-        bool setUp(std::string fileString, std::string existingChars, std::string puncChars);
+        bool setUp(std::string fileString, std::string eChars, std::string puncChars);
 
         // preprocessor initialization functions
 

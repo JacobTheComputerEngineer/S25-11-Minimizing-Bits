@@ -1,8 +1,8 @@
 #include "preprocessor.h"
 
-bool preprocessor_::setUp(std::string inputFile, std::string eChars, std::string puncChars)
+bool preprocessor_::setUp(std::string fileString, std::string eChars, std::string puncChars)
 {
-    iFile.open(inputFile);
+    iFile.open(fileString);
     existingChars = eChars;
     puncuationChars = puncChars;
     return iFile.good();
@@ -17,13 +17,11 @@ bool preprocessor_::setFile(std::string file)
 void preprocessor_::setExistingChars(std::string eChars)
 {
     existingChars = eChars;
-    return;
 }
 
 void preprocessor_::setPuncChars(std::string puncChars)
 {
     puncuationChars = puncChars;
-    return;
 }
 
 std::string preprocessor_::readLine()
@@ -69,7 +67,9 @@ std::vector<std::string> preprocessor_::separate(std::string word)      // TALK 
             words.push_back("");
             numWord++;
             words[numWord] += word[i];
-            if(i!=(word.size()-1)) words.push_back("");
+            if(i!=(word.size()-1)) {
+                words.push_back("");
+            }
             numWord++;
         }
 
@@ -89,7 +89,7 @@ std::vector<std::string> preprocessor_::removeNonexisting(std::vector<std::strin
     std::vector<std::string> outWords;
     for(int i=0;i<inWords.size();i++)
     {
-        if(inWords[i].size() > 0)
+        if(!inWords[i].empty())
         {
             outWords.push_back("");
         }

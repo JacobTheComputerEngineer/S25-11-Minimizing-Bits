@@ -131,7 +131,25 @@ cd /mnt/scripts
 dos2unix *.sh
 ```
 
-7) Generate code documenation:
+7) Run the integration test
+
+In the build directory after compiling the binaries, there is a Python integration test.
+This test file will run the encoder and decoder for a given input file.
+The console output is checked to ensure the proper format.
+Then, the final decoded message is compared to the original to ensure they have roughly the same contents.
+
+```
+cd /mnt/build
+python3 ./integration_test.py
+---------
+Ran 1 test
+
+OK
+```
+
+Observe that the integration test passed.
+
+8) Generate code documenation:
 
 In the source directory, run:
 
@@ -143,7 +161,7 @@ doxygen Doxyfile
 This will generate HTML documentation of the source code to the `./docs/html/` directory.
 The main page can then be viewed offline at `./docs/html/index.html`.
 
-8) Exit the container
+9) Exit the container
 
 You can exit the docker container command line interface at any time:
 

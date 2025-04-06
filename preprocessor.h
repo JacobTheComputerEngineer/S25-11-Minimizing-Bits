@@ -44,10 +44,10 @@ class preprocessor_
 
         /**
          * @brief Sets the existing character set for the preprocessor
-         * @param existingChars the set of existing characters
+         * @param eChars the set of existing characters
          * @return true if successful
          */
-        void setExistingChars(std::string existingChars);
+        void setExistingChars(std::string eChars);
 
         /**
          * @brief Sets the punctuation mark set for the preprocessor
@@ -110,10 +110,10 @@ class preprocessor_
 
         /**
          * @brief Replaces any unrecognized characters with an unknown symbol (?)
-         * @param outWord the words to convert
+         * @param inWords the words to convert
          * @return the output vector with any unknown characters removed
          */
-        std::vector<std::string> removeNonexisting(std::vector<std::string> outWord);
+        std::vector<std::string> removeNonexisting(std::vector<std::string> inWords);
 
         // helper functions
         /**

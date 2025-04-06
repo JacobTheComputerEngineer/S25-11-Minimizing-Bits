@@ -5,22 +5,6 @@ import unittest
 # the erl executable
 cmd = './erl'
 
-# the prompt to expect
-prompt = u'erl>'
-
-# These are example tests to show how to interact with REPL and CLI
-# Commented out for now so it runs
-class TestREPL(unittest.TestCase):
-
-    def setUp(self):
-        # self.wrapper = replwrap.REPLWrapper(cmd, prompt, None)
-        return
-
-    def test_example(self):
-        # output = self.wrapper.run_command(u'(1 2 +)')
-        # self.assertEqual(output.strip(), "(3)")
-        return       
-
 
 class TestCLI(unittest.TestCase):
 

@@ -98,6 +98,7 @@ There are several CMake targets added for convenience.
 These can be included or excluded in any combination.
 
 ```
+cd /mnt/build
 cmake -DSTRICT=True -DTIDY=True -DMEMORY=True -DCOVERAGE=True ..
 ```
 
@@ -123,11 +124,19 @@ cmake --build . --target tidy         # Run code style checker
 cmake --build . --target coverage     # Run code coverage check
 ```
 
+If the tidy or coverage script fails to run as expected, try using dos2unix:
+
+```
+cd /mnt/scripts
+dos2unix *.sh
+```
+
 7) Generate code documenation:
 
 In the source directory, run:
 
 ```
+cd /mnt/
 doxygen Doxyfile
 ```
 

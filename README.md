@@ -131,6 +131,37 @@ cd /mnt/scripts
 dos2unix *.sh
 ```
 
+For the memory test, you should see the following output:
+
+```
+cmake --build . --target memory
+-------------------
+All heap blocks were freed -- no leaks are possible
+```
+
+For the tidy test, you should see the following output:
+
+```
+cmake --build . --target tidy
+-------------------
+-- Running clang-tidy on *.cpp
+...
+```
+No explicit warnings should be generated. Any suppressed warnings in the form `X warnings generated.` can be safely ignored.
+
+For the coverage test, the coverage rate will be printed to the console:
+
+```
+cmake --build . --target coverage
+-------------------
+Overall coverage rate:
+  lines......: 93.2% (613 of 658 lines)
+  functions..: 90.2% (55 of 61 functions)
+```
+
+This information will also be summarized in an offline HTML format.
+The main page can be viewed offline at `./build/Coverage_Report/index.html`.
+
 7) Run the integration test
 
 In the build directory after compiling the binaries, there is a Python integration test.
@@ -141,7 +172,7 @@ Then, the final decoded message is compared to the original to ensure they have 
 ```
 cd /mnt/build
 python3 ./integration_test.py
----------
+-------------------
 Ran 1 test
 
 OK

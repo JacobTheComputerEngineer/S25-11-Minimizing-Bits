@@ -109,7 +109,7 @@ int demoEncode(int argc, char *argv[])
             } 
             word = erl.pre.convertWord(word[0]);
 
-            for(int i=0;i<word.size();i++)
+            for(std::size_t i=0;i<word.size();i++)
             {
                 if(erl.wb.contains_word(word.at(i)))
                 {
@@ -123,7 +123,7 @@ int demoEncode(int argc, char *argv[])
                 {
                     num_misses++;
                     // std::cout << "Printing by char\n";
-                    for(int j=0;j<word.at(i).size();j++)
+                    for(std::size_t j=0;j<word.at(i).size();j++)
                     {
                         if (erl.wb.contains_char(word.at(i).substr(j, 2)))      // Check for digraphs to assign a single 6-bit character code to 2 adjacent letters
                         {

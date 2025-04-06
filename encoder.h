@@ -63,7 +63,7 @@ private:
 	/**
      * @brief Marker of where to start filling buffer when new code is received so as not to overwrite leftover bits from past encoded word
      */
-	std::size_t index = 7;
+	int index = 7;
 
 	/**
      * @brief Output file stream object

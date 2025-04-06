@@ -43,7 +43,7 @@ bool preprocessor_::fileGood()
 
 std::string preprocessor_::lowercase(std::string word)
 {
-    for(int i=0;i<word.size();i++)
+    for(std::size_t i=0;i<word.size();i++)
     {
         word.at(i) = tolower(word.at(i));
     }
@@ -56,7 +56,7 @@ std::vector<std::string> preprocessor_::separate(std::string word)      // TALK 
     int numWord = 0;
     words.push_back("");
 
-    for(int i=0;i<word.size();i++)
+    for(std::size_t i=0;i<word.size();i++)
     {
         if(!isPunc(word[i]))
         {
@@ -87,7 +87,7 @@ std::vector<std::string> preprocessor_::removeNonexisting(std::vector<std::strin
 {
     int offset = 0;
     std::vector<std::string> outWords;
-    for(int i=0;i<inWords.size();i++)
+    for(std::size_t i=0;i<inWords.size();i++)
     {
         if(!inWords[i].empty())
         {
@@ -98,7 +98,7 @@ std::vector<std::string> preprocessor_::removeNonexisting(std::vector<std::strin
             offset++;
         }
 
-        for(int j=0;j<inWords[i].size();j++)
+        for(std::size_t j=0;j<inWords[i].size();j++)
         {
             if(isChar(inWords[i][j]))
             {

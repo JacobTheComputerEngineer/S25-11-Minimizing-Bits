@@ -214,6 +214,9 @@ int demoDecode(int argc, char *argv[])
             }
         }
     }
+
+    input.close();
+    output.close();
     
     std::cout<<"Size of erl: "<<getFileSize(messageFileName)<<"\n";
     std::cout<<"Size of decoded: "<<getFileSize(outfileName)<<"\n";

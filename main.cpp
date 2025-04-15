@@ -91,6 +91,7 @@ int demoEncode(int argc, char *argv[])
     // Keep track of stats
     uint32_t num_hits = 0;
     uint32_t num_misses = 0;
+    uint32_t miss_char_count = 0;
 
     bit_code_13_ wordCode;
     bit_code_6_ charCode;
@@ -140,6 +141,7 @@ int demoEncode(int argc, char *argv[])
                                 std::cout << "Failed at char : " << word.at(i).substr(j, 1) << "\n";    // Use enc to print character code
                             }
                         }
+                        miss_char_count++;
                     }
                     if(!erl.enc.printCharacter(erl.wb.char_to_code(" "))) {
                         std::cout<<"Failed adding *\n";
@@ -163,11 +165,13 @@ int demoEncode(int argc, char *argv[])
     uint32_t original_size = (uint32_t)getFileSize(messageFileName);
     uint32_t erl_size = (uint32_t)getFileSize(outfileName);
     double savings_percent = 1.0 - (double)(erl_size) / (double)(original_size);
+    double avg_length_missed_word = double(miss_char_count) / (double)num_misses;
 
     std::cout << "Size of original: " << getFileSize(messageFileName) << "\n";
     std::cout << "Size of erl: " << getFileSize(outfileName) << "\n";
     std::cout << "Size Reduction: " << savings_percent * 100.0 << "%\n";
     std::cout << "Hit Rate: " << hit_rate * 100.0 << "%\n";
+    std::cout << "Average Length of Missed Word: " << avg_length_missed_word << std::endl;
 
     return 0;
 }

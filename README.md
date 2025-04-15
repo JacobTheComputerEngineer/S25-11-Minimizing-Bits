@@ -1,9 +1,9 @@
 # S25-11 Minimizing Bits for Communication ECE 4805/6 Virginia Tech
 
 ### Members: Richard Martinez, Kylan Montgomery, Nate Sawitzki, Jacob Ramirez, Michael Volkman
-### Sponsor: Jeremy Werner, DOT&E
-### Subject Matter Expert: Yaling Yang
-### Mentor: Joe Adams
+### Sponsor: Dr. Jeremy Werner, DOT&E
+### Subject Matter Expert: Dr. Yaling Yang
+### Mentor: Dr. Joe Adams
 
 In remote environments, limited bandwidth and low data rates often hinder the effective use of digital communication infrastructure. To address this challenge, we have developed an innovative encoding scheme that optimizes bit efficiency while preserving message readability. The potential use cases include military field operations and commercial scenarios where efficient and reliable point-to-point communication is critical.
 
@@ -11,7 +11,7 @@ In remote environments, limited bandwidth and low data rates often hinder the ef
 
 Please follow these instructions to build the executable for S25-11.
 
-1) Clone this repo:
+1) Clone this repo (or otherwise download it):
 
 You could use https or ssh.
 Make sure your current working directory is this folder.
@@ -30,7 +30,7 @@ git config --local core.autocrlf false
 2) Build the docker image:
 
 This may take a few minutes and should only need to be done once
-(unless the dockerfile changes).
+(unless the dockerfile changes). Again, make sure your current working directory is this folder.
 
 ```
 docker build . -t s25-11
@@ -81,6 +81,13 @@ For example:
 
 It is critical that both the encoder and decoder have access to the same dictionary file.
 Otherwise, the outputs will not be human-readable.
+
+The dictionary file can be swapped out for any text file that contains 8192 words each on its own line 
+(see provided files for example).
+The S25-11 team has provided a curated default English dictionary that has been designed to work
+best on average for a given English message (defaultdictionary.txt). 
+Having more domain knowledge about the distribution of words in a message would allow
+for the dictionary to become more efficient.
 
 To run the unittests binary, simply execute it directly:
 
@@ -134,6 +141,9 @@ dos2unix *.sh
 For the memory test, you should see the following output:
 
 ```
+cd /mnt/build
+cmake -DMEMORY=True ..
+cmake --build .
 cmake --build . --target memory
 -------------------
 All heap blocks were freed -- no leaks are possible
@@ -142,6 +152,9 @@ All heap blocks were freed -- no leaks are possible
 For the tidy test, you should see the following output:
 
 ```
+cd /mnt/build
+cmake -DTIDY=True ..
+cmake --build .
 cmake --build . --target tidy
 -------------------
 -- Running clang-tidy on *.cpp
@@ -152,6 +165,9 @@ No explicit warnings should be generated. Any suppressed warnings in the form `X
 For the coverage test, the coverage rate will be printed to the console:
 
 ```
+cd /mnt/build
+cmake -DCOVERAGE=True ..
+cmake --build .
 cmake --build . --target coverage
 -------------------
 Overall coverage rate:

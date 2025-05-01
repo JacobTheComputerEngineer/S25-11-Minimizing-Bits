@@ -215,3 +215,8 @@ You can exit the docker container command line interface at any time:
 ```
 exit
 ```
+
+10) Archived HTML is available in case of issues
+
+In the case of issues with rebuilding the HTML files, the final versions of both HTML pages have been provided
+in `./archived_html`. Both the coverage report and doxygen documentation are available for viewing.
